@@ -1,0 +1,9 @@
+[Bb]in
+[Dd]ebug*/
+*.obj
+*.suo
+_ReSharper*/
+*.pdb
+*.bak
+*.user
+

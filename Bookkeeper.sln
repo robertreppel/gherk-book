@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookkeeper", "Bookkeeper\Bookkeeper.csproj", "{84C21AB0-265B-48E7-B3D5-12E79DDCD920}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBookkeeper", "TestBookkeeper\TestBookkeeper.csproj", "{20FF2D89-E70D-4B81-A881-A19D31525985}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FAA908D0-ED45-4B89-AB00-C17A2623293E}"
+	ProjectSection(SolutionItems) = preProject
+		README.markdown = README.markdown
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84C21AB0-265B-48E7-B3D5-12E79DDCD920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C21AB0-265B-48E7-B3D5-12E79DDCD920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84C21AB0-265B-48E7-B3D5-12E79DDCD920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84C21AB0-265B-48E7-B3D5-12E79DDCD920}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20FF2D89-E70D-4B81-A881-A19D31525985}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20FF2D89-E70D-4B81-A881-A19D31525985}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20FF2D89-E70D-4B81-A881-A19D31525985}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20FF2D89-E70D-4B81-A881-A19D31525985}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
