@@ -21,7 +21,7 @@ __The accounting bounded context of a fictional business__ is modeled in a servi
 
 There is a report printer for trial balances and account statements. It's very dumb and writes to the console.
 
-There is no user interface. Run the NUnit tests - they will Console.WriteLine trial balances and statements for the tests. (Try the "ShouldPayAccountsPayable" test.)
+There is no user interface. Run the NUnit tests - they will Console.WriteLine trial balances and statements. (Try the "ShouldPayAccountsPayable" test.)
 
 There is no database.
 
