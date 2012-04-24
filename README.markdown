@@ -10,13 +10,15 @@ __Assets = Liabilities + (Shareholders or Owners equity).__
 * There is general ledger with a chart of accounts and a general journal.
 * It's possible to post transactions.
 * Trial balances can be generated.
-* There are account statements (but the balance is not calculated - didn't get around to it.).
+* Account statements can be produced.
 * There are no sales-, purchase- or other special journals. 
 
 __The accounting bounded context of a fictional business__ is modeled in a service exposed by the IAccountingService interface:
 
 * Cash sales only.
 * Sales tax is handled like Canadian GST: Amount owing to the government = sales tax charged - sales tax paid.
+* The owner can inject cash into the business.
+* Investors can invest cash into the business.
 * There is no inventory. Product for sale is represented by a transaction reference string. It's vague, ill-defined and therefore probably consulting services.
 
 There is a report printer for trial balances and account statements. It's very dumb and writes to the console.

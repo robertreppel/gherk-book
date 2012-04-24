@@ -20,6 +20,46 @@ namespace Bookkeeper.Accounting
             } 
         }
 
+        public decimal Balance
+        {
+             get
+             {
+                 var debits = (from e in _journal.EntriesFor(AccountNumber)
+                               select e.DebitAmount).Sum();
+                 var credits = (from e in _journal.EntriesFor(AccountNumber)
+                               select e.CreditAmount).Sum();
+
+                 var balance = debits - credits;
+
+                 //Rules from http://en.wikipedia.org/wiki/Debits_and_credits:
+                 switch(Type)
+                 {
+                     case(AccountType.Asset):
+                         return DebitsIncreaseThe(balance);
+                     case (AccountType.Liability):
+                         return CreditsIncreaseThe(balance);
+                     case (AccountType.Revenue):
+                         return CreditsIncreaseThe(balance);
+                     case (AccountType.Expense):
+                         throw new NotImplementedException("Expense acct type balance not implemented.");
+                         return 0;
+                     case (AccountType.Equity):
+                         return CreditsIncreaseThe(balance);
+                 }
+                 return 0;
+             }
+        }
+
+        private static decimal DebitsIncreaseThe(decimal balance)
+        {
+            return balance;
+        }
+
+        private static decimal CreditsIncreaseThe(decimal balance)
+        {
+            return balance * (-1);
+        }
+
         public Account(int accountNumber, string name, AccountType accountAccountType)
         {
             AccountNumber = accountNumber;

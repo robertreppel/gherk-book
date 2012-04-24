@@ -62,6 +62,7 @@ namespace Bookkeeper.Infrastructure
                 Console.WriteLine(String.Format(accountStatementFormat, lineItem.TransactionDate.ToShortDateString(), 
                     lineItem.TransactionReference, lineItem.DebitAmount, lineItem.CreditAmount));
             }
+            Console.WriteLine("Balance: " + account.Balance);
             Console.WriteLine();
         }
 

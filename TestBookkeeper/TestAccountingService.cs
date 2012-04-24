@@ -24,7 +24,7 @@ namespace TestBookkeeper
             reports.Print<ITrialBalance>();
 
             //Created account + other accounts generated in CreateAndSetUpAccounts:
-            chartOfAccounts.Count.Should().Be(4);            
+            chartOfAccounts.Count.Should().Be(5);            
         }
 
         [Test]
@@ -84,17 +84,13 @@ namespace TestBookkeeper
             reports.Print<ITrialBalance>();
 
             Assert.IsTrue(trialBalance.IsBalanced, "Accounts should balance.");
-        
         }
 
         [Test]
         public void ShouldPayAccountsPayable()
         {
             var business = AccountingService.SetUpAccounting();
-            const int cashRegister = 1000;
             const int officeSupplies = 9000;
-            const int salesTaxOwing = 3000;
-            const int salesTaxPaid = 3001;
 
             business.CreateNewAccount(officeSupplies, "Office Supplies", AccountType.Asset);
 
@@ -117,7 +113,7 @@ namespace TestBookkeeper
                         transactionDate: DateTime.Today, 
                         transactionReference: "Inv. 1234 - Toner Cartridges (black & blue)");
 
-            business.PayTo(thelmasTonerShack, PartialPaymentOf45Dollars(), DateTime.Today, "Payment for Inv. 1234");
+            business.RecordPaymentTo(thelmasTonerShack, PartialPaymentOf45Dollars(), DateTime.Today, "Payment for Inv. 1234");
 
             var trialBalance = business.GetTrialBalance();
 
@@ -125,9 +121,9 @@ namespace TestBookkeeper
             reports.Print<ITrialBalance>();
             reports.Print<IAccount>(thelmasTonerShack);
             reports.Print<IAccount>(officeSupplies);
-            reports.Print<IAccount>(cashRegister);
-            reports.Print<IAccount>(salesTaxOwing);
-            reports.Print<IAccount>(salesTaxPaid);
+            reports.Print<IAccount>(business.CashRegisterAcctNo);
+            reports.Print<IAccount>(business.SalesTaxOwingAcctNo);
+            reports.Print<IAccount>(business.SalesTaxPaidAcctNo);
 
             Assert.IsTrue(trialBalance.IsBalanced, "Accounts should balance.");
 
@@ -138,6 +134,60 @@ namespace TestBookkeeper
             return 40.0m;
         }
 
+        [Test]
+        public void ShouldCalculateRevenueAndAssetAccountBalances()
+        {
+            var business = AccountingService.SetUpAccounting();
+            const int customer = 6654;
+            business.CreateNewAccount(customer, "Higgins Farm Machinery, Inc.", AccountType.Revenue);
 
+            business.RecordTaxFreeSale(6654, 1200.0m, DateTime.Now, "IT Consulting Services");
+
+            var reports = ReportPrinter.For(business);
+            reports.Print<ITrialBalance>();
+
+            var cash = business.GetAccount(business.CashRegisterAcctNo);
+            cash.Balance.Should().Be(1200.0m);
+
+            var customerAccount = business.GetAccount(customer);
+            customerAccount.Balance.Should().Be(1200);
+        }
+
+        [Test]
+        public void ShouldCalculateAssetAndLiabilityAccountBalances()
+        {
+            var business = AccountingService.SetUpAccounting();
+            const int investorMikeLewis = 3450;
+            business.CreateNewAccount(investorMikeLewis, "Mike Lewis Investment", AccountType.Liability);
+            business.RecordCashInvestmentBy(investorMikeLewis, 10000.0m, DateTime.Now, "Grubstake provided by Uncle Mike.");
+
+            var reports = ReportPrinter.For(business);
+            reports.Print<ITrialBalance>();
+            reports.Print<IAccount>(investorMikeLewis);
+
+            var cash = business.GetAccount(business.CashRegisterAcctNo);
+            cash.Balance.Should().Be(10000.0m);
+
+            var mikeLewisAccount = business.GetAccount(investorMikeLewis);
+            mikeLewisAccount.Balance.Should().Be(10000.0m);
+        }
+
+        [Test]
+        public void ShouldRecordOwnersEquity()
+        {
+            var business = AccountingService.SetUpAccounting();
+            business.RecordCashInjectionByOwner(5000.0m, DateTime.Now, "John Smith, cash injection into business");
+
+            var ownersEquity = business.GetAccount(business.OwnersEquityAcctNo);
+            ownersEquity.Balance.Should().Be(5000.0m);
+
+            var cash = business.GetAccount(business.CashRegisterAcctNo);
+            cash.Balance.Should().Be(5000.0m);
+
+            var reports = ReportPrinter.For(business);
+            reports.Print<ITrialBalance>();
+            reports.Print<IAccount>(business.OwnersEquityAcctNo);
+            reports.Print<IAccount>(business.CashRegisterAcctNo);
+        }
     }
 }

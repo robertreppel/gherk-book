@@ -6,19 +6,46 @@ namespace Bookkeeper.Accounting
 {
     public class AccountingService : IAccountingService
     {
-        public static AccountingService SetUpAccounting()
+        private readonly Dictionary<int, Account> _generalLedger = new Dictionary<int, Account>();
+        private readonly IJournal _journal = new Journal();
+        const int SalesTaxOwing = 3002;
+        const int CashRegister = 1000;
+        const int SalesTaxPaid = 3001;
+        const int OwnerEquity = 7000;
+
+        public static IAccountingService SetUpAccounting()
         {
             var accountingService = new AccountingService();
 
-            const int salesTaxOwingAccount = 3000;
-            accountingService.CreateSalesTaxOwingAccount(salesTaxOwingAccount, "Sales Tax Owing");
+            accountingService.CreateSalesTaxOwingAccount();
 
-            const int salesTaxPaidAccount = 3001;
-            accountingService.CreateSalesTaxPaidAccount(salesTaxPaidAccount, "Sales Tax Paid");
+            accountingService.CreateSalesTaxPaidAccount();
 
-            const int cashRegister = 1000;
-            accountingService.CreateCashRegisterAccount(cashRegister, "Cash");
+            accountingService.CreateCashRegisterAccount();
+
+            accountingService.CreateOwnerEquityAccount();
+
             return accountingService;
+        }
+
+        public int SalesTaxPaidAcctNo
+        {
+            get { return SalesTaxPaid; }
+        }
+
+        public int CashRegisterAcctNo
+        {
+            get { return CashRegister; }
+        }
+
+        public int OwnersEquityAcctNo
+        {
+            get { return OwnerEquity; }
+        }
+
+        public int SalesTaxOwingAcctNo
+        {
+            get { return SalesTaxOwing; }
         }
 
         public IEnumerable<IJournalEntry> GetJournal()
@@ -45,7 +72,7 @@ namespace Bookkeeper.Accounting
 
         public void RecordTaxFreeSale(int customerAccountNo, decimal amount, DateTime transactionDate, string transactionReference)
         {
-            var cashAccount = _generalLedger[_cashRegisterAccountNo];
+            var cashAccount = _generalLedger[CashRegister];
             cashAccount.RecordTransaction(amount,transactionDate, transactionReference);
 
             var customerAccount = _generalLedger[customerAccountNo];
@@ -54,27 +81,30 @@ namespace Bookkeeper.Accounting
 
         public void RecordTaxableSale(int customerAccountNo, decimal netAmount, decimal salesTaxAmount, DateTime transactionDate, string transactionReference)
         {
-            var cashAccount = _generalLedger[_cashRegisterAccountNo];
+            var cashAccount = _generalLedger[CashRegister];
             cashAccount.RecordTransaction(netAmount + salesTaxAmount, transactionDate, transactionReference);
 
             var customerAccount = _generalLedger[customerAccountNo];
             customerAccount.RecordTransaction(netAmount, transactionDate, transactionReference);
 
-            var salesTaxOwingAccount = _generalLedger[_salesTaxOwingAccountNo];
+            var salesTaxOwingAccount = _generalLedger[SalesTaxOwing];
             salesTaxOwingAccount.RecordTransaction(salesTaxAmount, transactionDate, transactionReference);
         }
 
         public void RecordPurchaseFrom(int supplierAccountNo, int assetAccountNo, decimal netAmount, decimal salesTaxAmount, DateTime transactionDate, string transactionReference)
         {
-            AddToSalesTaxPaid(salesTaxAmount, transactionDate, transactionReference);
-            DeductFromSalesTaxOwing(salesTaxAmount, transactionDate, transactionReference);
+            if(salesTaxAmount > 0)
+            {
+                AddToSalesTaxPaid(salesTaxAmount, transactionDate, transactionReference);
+                DeductFromSalesTaxOwing(salesTaxAmount, transactionDate, transactionReference);
+            }
             RecordAmountOwingTo(supplierAccountNo, netAmount, transactionDate, transactionReference);
             RecordAsset(assetAccountNo, netAmount, transactionDate, transactionReference);
         }
 
-        public void PayTo(int recipientAccountNo, decimal amount, DateTime transactionDate, string transactionReference)
+        public void RecordPaymentTo(int recipientAccountNo, decimal amount, DateTime transactionDate, string transactionReference)
         {
-            var cashAccount = _generalLedger[_cashRegisterAccountNo];
+            var cashAccount = _generalLedger[CashRegister];
             cashAccount.RecordTransaction((amount * -1), transactionDate, transactionReference);
 
             var recipientAccount = _generalLedger[recipientAccountNo];
@@ -101,47 +131,60 @@ namespace Bookkeeper.Accounting
 
         private void AddToSalesTaxPaid(decimal salesTaxAmount, DateTime transactionDate, string transactionReference)
         {
-            var salesTaxPaidAccount = _generalLedger[_salesTaxPaidAccountNo];
+            var salesTaxPaidAccount = _generalLedger[SalesTaxPaid];
             salesTaxPaidAccount.RecordTransaction(salesTaxAmount, transactionDate, transactionReference);
         }
 
         private void DeductFromSalesTaxOwing(decimal salesTaxAmount, DateTime transactionDate, string transactionReference)
         {
-            var salesTaxOwingAccount = _generalLedger[_salesTaxOwingAccountNo];
+            var salesTaxOwingAccount = _generalLedger[SalesTaxOwing];
             salesTaxOwingAccount.RecordTransaction((salesTaxAmount * -1), transactionDate, transactionReference);
         }
 
-        private void CreateCashRegisterAccount(int cashRegister, string accountName)
+        private void CreateCashRegisterAccount()
         {
-            _cashRegisterAccountNo = cashRegister;
-            CreateNewAccount(cashRegister, accountName, AccountType.Asset);
+            CreateNewAccount(CashRegister, "Cash", AccountType.Asset);
         }
 
-        private void CreateSalesTaxOwingAccount(int salesTaxAccountNo, string accountName)
+        private void CreateSalesTaxOwingAccount()
         {
-            _salesTaxOwingAccountNo = salesTaxAccountNo;
-            CreateNewAccount(salesTaxAccountNo, accountName, AccountType.Liability);
+            CreateNewAccount(SalesTaxOwing, "Sales Tax Owing", AccountType.Liability);
         }
 
-        private void CreateSalesTaxPaidAccount(int salesTaxPaidAccountNo, string accountName)
+        private void CreateSalesTaxPaidAccount()
         {
-            _salesTaxPaidAccountNo = salesTaxPaidAccountNo;
-            CreateNewAccount(salesTaxPaidAccountNo, accountName, AccountType.Equity);
+            CreateNewAccount(SalesTaxPaid, "Sales Tax Refunds", AccountType.Revenue);
+        }
+
+        private void CreateOwnerEquityAccount()
+        {
+            CreateNewAccount(OwnerEquity, "John Smith (Owner)", AccountType.Equity);
         }
 
         private AccountingService()
         {
         }
 
-        private readonly Dictionary<int, Account> _generalLedger = new Dictionary<int, Account>();
-        private readonly IJournal _journal = new Journal();
-        private int _salesTaxOwingAccountNo;
-        private int _cashRegisterAccountNo;
-        private int _salesTaxPaidAccountNo;
-
         public IAccount GetStatementFor(int accountNo)
         {
             return _generalLedger[accountNo];
+        }
+
+        public void RecordCashInvestmentBy(int accountNo, decimal amount, DateTime transactionDate, string transactionReference)
+        {
+            _generalLedger[accountNo].RecordTransaction(amount,transactionDate, transactionReference);
+            var cashAccount = _generalLedger[CashRegisterAcctNo];
+            cashAccount.RecordTransaction(amount, transactionDate, transactionReference);
+
+        }
+
+        public void RecordCashInjectionByOwner(decimal amount, DateTime transactionDate, string transactionReference)
+        {
+            var ownerEquityAccount = _generalLedger[OwnersEquityAcctNo];
+            ownerEquityAccount.RecordTransaction(amount, transactionDate, transactionReference);
+
+            var cashAccount = _generalLedger[CashRegisterAcctNo];
+            cashAccount.RecordTransaction(amount, transactionDate, transactionReference);
         }
     }
 

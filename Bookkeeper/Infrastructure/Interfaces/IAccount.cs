@@ -9,5 +9,6 @@ namespace Bookkeeper.Infrastructure.Interfaces
         string Name { get; set; }
         AccountType Type { get; }
         IEnumerable<IJournalEntry> Transactions { get; }
+        decimal Balance { get; }
     }
 }
