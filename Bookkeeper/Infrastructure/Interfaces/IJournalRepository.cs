@@ -2,7 +2,7 @@
 
 namespace Bookkeeper.Infrastructure.Interfaces
 {
-    internal interface IJournal
+    internal interface IJournalRepository
     {
         void Add(IJournalEntry entry);
         IEnumerable<IJournalEntry> Entries();

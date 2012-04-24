@@ -14,7 +14,7 @@ namespace TestBookkeeper
         [Test]
         public void ShouldCreateNewAccount()
         {
-            var business = AccountingService.SetUpAccounting();
+            var business = Business.SetUpAccounting();
             business.CreateNewAccount(1001, "Bank Account", AccountType.Asset);
 
 
@@ -30,7 +30,7 @@ namespace TestBookkeeper
         [Test]
         public void ShouldRecordCashSaleWithoutSalesTax()
         {
-            var business = AccountingService.SetUpAccounting();
+            var business = Business.SetUpAccounting();
             const int customer = 2000;
             business.CreateNewAccount(customer, "Jim Haskell", AccountType.Revenue);
 
@@ -48,7 +48,7 @@ namespace TestBookkeeper
         [Test]
         public void ShouldChargeSalesTax()
         {
-            var business = AccountingService.SetUpAccounting();
+            var business = Business.SetUpAccounting();
             const int customer = 2001;
             business.CreateNewAccount(customer, "Jemima Jenkins", AccountType.Revenue);
 
@@ -68,7 +68,7 @@ namespace TestBookkeeper
         [Test]
         public void ShouldRecordPurchaseWithSalesTax()
         {
-            var business = AccountingService.SetUpAccounting();
+            var business = Business.SetUpAccounting();
             const int supplier = 600;
             business.CreateNewAccount(supplier, "Marvin's Office Supplies", AccountType.Liability);
 
@@ -89,7 +89,7 @@ namespace TestBookkeeper
         [Test]
         public void ShouldPayAccountsPayable()
         {
-            var business = AccountingService.SetUpAccounting();
+            var business = Business.SetUpAccounting();
             const int officeSupplies = 9000;
 
             business.CreateNewAccount(officeSupplies, "Office Supplies", AccountType.Asset);
@@ -137,7 +137,7 @@ namespace TestBookkeeper
         [Test]
         public void ShouldCalculateRevenueAndAssetAccountBalances()
         {
-            var business = AccountingService.SetUpAccounting();
+            var business = Business.SetUpAccounting();
             const int customer = 6654;
             business.CreateNewAccount(customer, "Higgins Farm Machinery, Inc.", AccountType.Revenue);
 
@@ -156,7 +156,7 @@ namespace TestBookkeeper
         [Test]
         public void ShouldCalculateAssetAndLiabilityAccountBalances()
         {
-            var business = AccountingService.SetUpAccounting();
+            var business = Business.SetUpAccounting();
             const int investorMikeLewis = 3450;
             business.CreateNewAccount(investorMikeLewis, "Mike Lewis Investment", AccountType.Liability);
             business.RecordCashInvestmentBy(investorMikeLewis, 10000.0m, DateTime.Now, "Grubstake provided by Uncle Mike.");
@@ -175,7 +175,7 @@ namespace TestBookkeeper
         [Test]
         public void ShouldRecordOwnersEquity()
         {
-            var business = AccountingService.SetUpAccounting();
+            var business = Business.SetUpAccounting();
             business.RecordCashInjectionByOwner(5000.0m, DateTime.Now, "John Smith, cash injection into business");
 
             var ownersEquity = business.GetAccount(business.OwnersEquityAcctNo);

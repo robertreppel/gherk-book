@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Linq;
-using Bookkeeper.Accounting;
 using Bookkeeper.Infrastructure.Interfaces;
 
 namespace Bookkeeper.Infrastructure
 {
     internal class ConsoleReportPrinter : IPrintReports
     {
-        private readonly IAccountingService _accountingService;
+        private IDoAccounting _business;
 
-        public ConsoleReportPrinter(IAccountingService accountingService)
-        {
-            _accountingService = accountingService;
-        }
+        public IDoAccounting ForBusiness { set { _business = value; } }
 
         public void Print<T>()
         {
             var reportName = typeof(T).Name;
             if(reportName == "ITrialBalance")
             {
-                PrintTrialBalance(_accountingService.GetTrialBalance());
+                PrintTrialBalance(_business.GetTrialBalance());
             } else if(reportName == "IAccount")
             {
-                PrintStatementFor(_accountingService.GetAccount(123));
+                PrintStatementFor(_business.GetAccount(123));
             } else
             {
                 throw new ReportingException("Unknown report: '" + reportName + "'.");
@@ -34,11 +30,11 @@ namespace Bookkeeper.Infrastructure
             var reportName = typeof(T).Name;
             if (reportName == "ITrialBalance")
             {
-                PrintTrialBalance(_accountingService.GetTrialBalance());
+                PrintTrialBalance(_business.GetTrialBalance());
             }
             else if (reportName == "IAccount")
             {
-                PrintStatementFor(_accountingService.GetAccount(id));
+                PrintStatementFor(_business.GetAccount(id));
             }
             else
             {

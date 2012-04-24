@@ -15,7 +15,7 @@ namespace Bookkeeper.Accounting
         public decimal TotalDebitAmount { get; private set; }
         public decimal TotalCreditAmount { get; private set; }
 
-        public static ITrialBalance GenerateFrom(Dictionary<int, Account> chartOfAccounts, IJournal journal)
+        public static ITrialBalance GenerateFrom(IEnumerable<IAccount> chartOfAccounts, IJournalRepository journal)
         {
             var lineItems = GenerateLineItemsFrom(chartOfAccounts, journal);
 
@@ -42,10 +42,10 @@ namespace Bookkeeper.Accounting
             return debitsGrandTotal == creditsGrandTotal;
         }
 
-        private static IEnumerable<ITrialBalanceLineItem> GenerateLineItemsFrom(Dictionary<int, Account> chartOfAccounts, IJournal journal)
+        private static IEnumerable<ITrialBalanceLineItem> GenerateLineItemsFrom(IEnumerable<IAccount> chartOfAccounts, IJournalRepository journal)
         {
             var lineItems = new List<ITrialBalanceLineItem>();
-            foreach (var thisAccount in chartOfAccounts.Values)
+            foreach (var thisAccount in chartOfAccounts)
             {
                 var journalEntriesFor = journal.EntriesFor(thisAccount.AccountNumber);
                 lineItems.Add(LineItemWithTotalDebitsAndCreditsFor(journalEntriesFor, thisAccount));
@@ -53,7 +53,7 @@ namespace Bookkeeper.Accounting
             return lineItems;
         }
 
-        private static TrialBalanceLineItem LineItemWithTotalDebitsAndCreditsFor(IEnumerable<IJournalEntry> journalEntriesForAccount, Account account)
+        private static TrialBalanceLineItem LineItemWithTotalDebitsAndCreditsFor(IEnumerable<IJournalEntry> journalEntriesForAccount, IAccount account)
         {
             var totalDebits = 0.0m;
             var totalCredits = 0.0m;

@@ -42,18 +42,21 @@
   <ItemGroup>
     <Compile Include="Accounting\Account.cs" />
     <Compile Include="Accounting\AccountType.cs" />
-    <Compile Include="Accounting\AccountingService.cs" />
-    <Compile Include="Accounting\Journal.cs" />
+    <Compile Include="Accounting\Business.cs" />
     <Compile Include="Accounting\JournalEntry.cs" />
     <Compile Include="Accounting\TrialBalance.cs" />
     <Compile Include="Accounting\TrialBalanceLineItem.cs" />
-    <Compile Include="IAccountingService.cs" />
+    <Compile Include="IDoAccounting.cs" />
     <Compile Include="Infrastructure\ConsoleReportPrinter.cs" />
+    <Compile Include="Infrastructure\InMemoryGeneralLedgerRepository.cs" />
     <Compile Include="Infrastructure\Interfaces\IAccount.cs" />
-    <Compile Include="Infrastructure\Interfaces\IJournal.cs" />
+    <Compile Include="Infrastructure\Interfaces\IGeneralLedgerRepository.cs" />
+    <Compile Include="Infrastructure\Interfaces\IJournalRepository.cs" />
     <Compile Include="Infrastructure\Interfaces\IJournalEntry.cs" />
     <Compile Include="Infrastructure\Interfaces\ITrialBalance.cs" />
     <Compile Include="Infrastructure\Interfaces\ITrialBalanceLineItem.cs" />
+    <Compile Include="Infrastructure\InMemoryJournalRepository.cs" />
+    <Compile Include="Infrastructure\Ioc.cs" />
     <Compile Include="Infrastructure\ReportPrinter.cs" />
     <Compile Include="IPrintReports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

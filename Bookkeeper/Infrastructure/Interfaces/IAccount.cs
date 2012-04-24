@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Bookkeeper.Accounting;
 
 namespace Bookkeeper.Infrastructure.Interfaces
@@ -10,5 +11,6 @@ namespace Bookkeeper.Infrastructure.Interfaces
         AccountType Type { get; }
         IEnumerable<IJournalEntry> Transactions { get; }
         decimal Balance { get; }
+        void RecordTransaction(decimal amount, DateTime transactionDate, string transactionReference);
     }
 }

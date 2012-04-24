@@ -5,7 +5,7 @@ using Bookkeeper.Infrastructure.Interfaces;
 
 namespace Bookkeeper
 {
-    public interface IAccountingService
+    public interface IDoAccounting
     {
         void CreateNewAccount(int accountNumber, string accountName, AccountType type);
 

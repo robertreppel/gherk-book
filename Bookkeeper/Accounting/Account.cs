@@ -7,7 +7,7 @@ namespace Bookkeeper.Accounting
 {
     internal class Account : IAccount
     {
-        private IJournal _journal;
+        private IJournalRepository _journal;
         public int AccountNumber { get; private set; }
         public string Name { get; set; }
         public AccountType Type { get; private set; }
@@ -68,9 +68,9 @@ namespace Bookkeeper.Accounting
             _journal = null;
         }
 
-        public IJournal Journal { set { _journal = value; } }
+        public IJournalRepository Journal { set { _journal = value; } }
 
-        protected internal void RecordTransaction(decimal amount, DateTime transactionDate, string transactionReference)
+        public void RecordTransaction(decimal amount, DateTime transactionDate, string transactionReference)
         {
             if (amount == 0) throw new AccountException("Cannot record a transaction with a zero amount.");
             IJournalEntry journalEntry = null;

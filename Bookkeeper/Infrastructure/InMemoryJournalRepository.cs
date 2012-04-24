@@ -2,11 +2,11 @@
 using System.Linq;
 using Bookkeeper.Infrastructure.Interfaces;
 
-namespace Bookkeeper.Accounting
+namespace Bookkeeper.Infrastructure
 {
-    internal class Journal : IJournal
+    internal class InMemoryJournalRepository : IJournalRepository
     {
-        readonly List<IJournalEntry> _journalEntries = new List<IJournalEntry>();
+        private readonly List<IJournalEntry> _journalEntries = new List<IJournalEntry>();
 
         public void Add(IJournalEntry entry)
         {
