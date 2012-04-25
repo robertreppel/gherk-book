@@ -24,7 +24,7 @@ namespace TestBookkeeper
             reports.Print<ITrialBalance>();
 
             //Created account + other accounts generated in CreateAndSetUpAccounts:
-            chartOfAccounts.Count.Should().Be(5);            
+            chartOfAccounts.Count.Should().Be(4);            
         }
 
         [Test]
@@ -99,21 +99,21 @@ namespace TestBookkeeper
             const int thelmasTonerShack = 602;
             business.CreateNewAccount(thelmasTonerShack, "Thelma's Toner Shack", AccountType.Liability);
 
-            business.RecordTaxableSale(customerAccountNo: acmeEnterprises, 
-                                       netAmount: 100.0m, 
-                                       salesTaxAmount: 10.0m, 
-                                       transactionDate: DateTime.Today, 
+            business.RecordTaxableSale(customerAccountNo: acmeEnterprises,
+                                       netAmount: 100.0m,
+                                       salesTaxAmount: 10.0m,
+                                       transactionDate: DateTime.Today,
                                        transactionReference: "Plumbing Services sold to Larry (1.5hrs.)");
 
             business.RecordPurchaseFrom(
-                        supplierAccountNo: thelmasTonerShack, 
-                        assetAccountNo: officeSupplies, 
-                        netAmount: 45.0m, 
-                        salesTaxAmount: 5.0m, 
-                        transactionDate: DateTime.Today, 
+                        supplierAccountNo: thelmasTonerShack,
+                        assetAccountNo: officeSupplies,
+                        netAmount: 45.0m,
+                        salesTaxAmount: 5.0m,
+                        transactionDate: DateTime.Today,
                         transactionReference: "Inv. 1234 - Toner Cartridges (black & blue)");
 
-            business.RecordPaymentTo(thelmasTonerShack, PartialPaymentOf45Dollars(), DateTime.Today, "Payment for Inv. 1234");
+            business.RecordPaymentTo(thelmasTonerShack, PartialPaymentOf(40.0m), DateTime.Today, "Payment for Inv. 1234");
 
             var trialBalance = business.GetTrialBalance();
 
@@ -123,15 +123,14 @@ namespace TestBookkeeper
             reports.Print<IAccount>(officeSupplies);
             reports.Print<IAccount>(business.CashRegisterAcctNo);
             reports.Print<IAccount>(business.SalesTaxOwingAcctNo);
-            reports.Print<IAccount>(business.SalesTaxPaidAcctNo);
 
             Assert.IsTrue(trialBalance.IsBalanced, "Accounts should balance.");
 
         }
 
-        private static decimal PartialPaymentOf45Dollars()
+        private static decimal PartialPaymentOf(decimal amount)
         {
-            return 40.0m;
+            return amount;
         }
 
         [Test]

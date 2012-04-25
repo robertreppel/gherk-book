@@ -74,7 +74,7 @@ namespace Bookkeeper.Infrastructure
             Console.WriteLine("Trial Balance");
             Console.WriteLine("-------------");
             const string formatProvider = "|{0,-13}\t|{1,-12}\t|{2,-30}\t|{3,10}\t|{4,10}|";
-            Console.WriteLine(String.Format(formatProvider, "AccountNumber", "AccountType", "AccountName", "Debit", "Credit"));
+            Console.WriteLine(String.Format(formatProvider, "AccountNumber", "AcctType", "AccountName", "Debit", "Credit"));
 
             var sortedLineItems = (from ln in trialBalance.LineItems
                                    select ln).OrderBy(x => x.AcctType);

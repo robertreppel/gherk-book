@@ -13,9 +13,10 @@ __Assets = Liabilities + (Shareholders or Owners equity).__
 * Account statements can be produced.
 * There are no sales-, purchase- or other special journals. 
 
-__The accounting bounded context of a fictional business__ is modeled in a service exposed by the IAccountingService interface:
+__The accounting bounded context of a fictional business__ is modeled in a service exposed by the IDoAccounting interface:
 
 * Cash sales only.
+* We charge sales tax. Amount owing to the government is amount collected - amount paid by the business.
 * The owner can inject cash into the business.
 * Investors can invest cash into the business.
 * There is no inventory. Product for sale is represented by a transaction reference string. It's vague, ill-defined and therefore probably consulting services.
@@ -27,6 +28,4 @@ There is no user interface. Run the NUnit tests - they will Console.WriteLine tr
 There is no database.
 
 __DISCLAIMER:__ I'm not an accountant. This was put together in a hurry, with domain knowledge googled on the fly. Stay out of jail.
-
-(For example: There is currently something wrong with the way sales tax is handled.) 
 
