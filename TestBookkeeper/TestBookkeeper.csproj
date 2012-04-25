@@ -50,13 +50,28 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TechTalk.SpecFlow">
+      <HintPath>..\packages\SpecFlow.1.8.1\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessAccountingStepDefinition.cs" />
+    <Compile Include="PurchaseSomething.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PurchaseSomething.feature</DependentUpon>
+    </Compile>
     <Compile Include="TestAccountingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrialBalanceValidationStepDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="PurchaseSomething.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>PurchaseSomething.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bookkeeper\Bookkeeper.csproj">

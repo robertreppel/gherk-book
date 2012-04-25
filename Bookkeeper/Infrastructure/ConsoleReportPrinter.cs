@@ -73,16 +73,17 @@ namespace Bookkeeper.Infrastructure
         {
             Console.WriteLine("Trial Balance");
             Console.WriteLine("-------------");
-            Console.WriteLine(String.Format("{0,-7}\t{1,-12}\t{2,-30}\t{3,10}\t{4,10}", "Acct. No", "Type", "Acct. Description", "Debit", "Credit"));
+            const string formatProvider = "|{0,-13}\t|{1,-12}\t|{2,-30}\t|{3,10}\t|{4,10}|";
+            Console.WriteLine(String.Format(formatProvider, "AccountNumber", "AccountType", "AccountName", "Debit", "Credit"));
 
             var sortedLineItems = (from ln in trialBalance.LineItems
                                    select ln).OrderBy(x => x.AcctType);
 
             foreach (var lineItem in sortedLineItems)
             {
-                Console.WriteLine(String.Format("{0,-7}\t{1,-12}\t{2,-30}\t{3,10}\t{4,10}", lineItem.AccountNumber, lineItem.AcctType, lineItem.AccountName, lineItem.Debit, lineItem.Credit));
+                Console.WriteLine(String.Format(formatProvider, lineItem.AccountNumber, lineItem.AcctType, lineItem.AccountName, lineItem.Debit, lineItem.Credit));
             }
-            Console.WriteLine(String.Format("{0,-7}\t{1,-12}\t{2,-30}\t{3,10}\t{4,10}", "Totals:", "", "", trialBalance.TotalDebitAmount, trialBalance.TotalCreditAmount));
+            Console.WriteLine(String.Format(formatProvider, "Totals:", "", "", trialBalance.TotalDebitAmount, trialBalance.TotalCreditAmount));
             Console.WriteLine();
         }
     }
