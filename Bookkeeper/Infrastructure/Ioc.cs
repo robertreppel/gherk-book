@@ -1,7 +1,8 @@
 ﻿using System;
-using Bookkeeper.Accounting;
+using System.Runtime.CompilerServices;
 using Bookkeeper.Infrastructure.Interfaces;
 
+[assembly: InternalsVisibleTo("TestBookkeeper")]
 namespace Bookkeeper.Infrastructure
 {
     public static class Ioc 
