@@ -21,7 +21,7 @@ namespace TestBookkeeper
 
             var business = (IDoAccounting)ScenarioContext.Current["business"];
 
-            //Uncomment to see what the actual trial balance looks like:
+            //For debugging - uncomment to see what the actual trial balance looks like:
             //var reports = ReportPrinter.For(business);
             //reports.Print<ITrialBalance>();
 

@@ -110,22 +110,16 @@ this.ScenarioSetup(scenarioInfo);
                         "Liability",
                         "Joe\'s Office Supplies",
                         "0.0",
-                        "4000.0"});
+                        "4400.0"});
             table1.AddRow(new string[] {
                         "7000",
                         "Equity",
                         "John Smith (Owner)",
                         "0.0",
                         "0.0"});
-            table1.AddRow(new string[] {
-                        "3001",
-                        "Revenue",
-                        "Sales Tax Refunds",
-                        "0.0",
-                        "400.0"});
 #line 9
  testRunner.Then("the trial balance should look like this:", ((string)(null)), table1);
-#line 19
+#line 18
  testRunner.And("the trial balance total should be $4400.");
 #line hidden
             this.ScenarioCleanup();

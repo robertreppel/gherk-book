@@ -19,7 +19,6 @@ namespace Bookkeeper.Accounting
             var accountingService = new Business(Ioc.Resolve<IJournalRepository>(), Ioc.Resolve<IGeneralLedgerRepository>());
 
             accountingService.CreateSalesTaxOwingAccount();
-            accountingService.CreateSalesTaxPaidAccount();
             accountingService.CreateCashRegisterAccount();
             accountingService.CreateOwnerEquityAccount();
 
@@ -93,10 +92,9 @@ namespace Bookkeeper.Accounting
         {
             if(salesTaxAmount > 0)
             {
-                AddToSalesTaxPaid(salesTaxAmount, transactionDate, transactionReference);
                 DeductFromSalesTaxOwing(salesTaxAmount, transactionDate, transactionReference);
             }
-            RecordAmountOwingTo(supplierAccountNo, netAmount, transactionDate, transactionReference);
+            RecordAmountOwingTo(supplierAccountNo, netAmount + salesTaxAmount, transactionDate, transactionReference);
             RecordAsset(assetAccountNo, netAmount, transactionDate, transactionReference);
         }
 
@@ -125,12 +123,6 @@ namespace Bookkeeper.Accounting
         {
             var supplierAccount = _generalLedger.GetAccount(supplierAccountNo);
             supplierAccount.RecordTransaction(netAmount, transactionDate, transactionReference);
-        }
-
-        private void AddToSalesTaxPaid(decimal salesTaxAmount, DateTime transactionDate, string transactionReference)
-        {
-            var salesTaxPaidAccount = _generalLedger.GetAccount(SalesTaxPaid);
-            salesTaxPaidAccount.RecordTransaction(salesTaxAmount, transactionDate, transactionReference);
         }
 
         private void DeductFromSalesTaxOwing(decimal salesTaxAmount, DateTime transactionDate, string transactionReference)
