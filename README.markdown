@@ -16,7 +16,6 @@ __Assets = Liabilities + (Shareholders or Owners equity).__
 __The accounting bounded context of a fictional business__ is modeled in a service exposed by the IAccountingService interface:
 
 * Cash sales only.
-* Sales tax is handled like Canadian GST: Amount owing to the government = sales tax charged - sales tax paid.
 * The owner can inject cash into the business.
 * Investors can invest cash into the business.
 * There is no inventory. Product for sale is represented by a transaction reference string. It's vague, ill-defined and therefore probably consulting services.
@@ -28,5 +27,6 @@ There is no user interface. Run the NUnit tests - they will Console.WriteLine tr
 There is no database.
 
 __DISCLAIMER:__ I'm not an accountant. This was put together in a hurry, with domain knowledge googled on the fly. Stay out of jail.
- 
+
+(For example: There is currently something wrong with the way sales tax is handled.) 
 
