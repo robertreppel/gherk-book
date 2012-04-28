@@ -28,6 +28,15 @@ namespace TestBookkeeper
         }
 
         [Test]
+        [ExpectedException(typeof(ArgumentException), ExpectedMessage = "Account no. 1001 already exists in the ledger.")]
+        public void ShouldNotCreateASecondAccountWithTheSameNumber()
+        {
+            var business = Business.SetUpAccounting();
+            business.CreateNewAccount(1001, "Bank Account", AccountType.Asset);
+            business.CreateNewAccount(1001, "Another Account", AccountType.Asset);
+        }
+
+        [Test]
         public void ShouldRecordCashSaleWithoutSalesTax()
         {
             var business = Business.SetUpAccounting();
