@@ -19,22 +19,20 @@ namespace TestBookkeeper
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.8.1.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("Purchasing")]
-    public partial class PurchasingFeature
+    [NUnit.Framework.DescriptionAttribute("Record Bookkeeping Transactions")]
+    public partial class RecordBookkeepingTransactionsFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "PurchaseSomething.feature"
+#line 1 "RecordBookkeepingTransactions.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Purchasing", "When I purchase something the supplier account should show the liability, the ass" +
-                    "et account\r\nshould show the asset and sales tax eligible for government refund s" +
-                    "hould be shown.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Record Bookkeeping Transactions", "\r\n- Create accounts\r\n- Record transactions in the ledger", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -66,31 +64,17 @@ namespace TestBookkeeper
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void FeatureBackground()
-        {
-#line 5
-#line 6
- testRunner.Given("the following accounts: 3002 Sales Tax Owing, 1000 Cash, 3001 Sales Tax Paid, 700" +
-                    "0 John Smith");
-#line hidden
-        }
-        
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Purchase office supplies")]
-        public virtual void PurchaseOfficeSupplies()
+        [NUnit.Framework.DescriptionAttribute("Create an account")]
+        public virtual void CreateAnAccount()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Purchase office supplies", ((string[])(null)));
-#line 8
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Create an account", ((string[])(null)));
+#line 6
 this.ScenarioSetup(scenarioInfo);
-#line 5
-this.FeatureBackground();
-#line 9
- testRunner.Given("a asset account 1234 \"Office Supplies\"");
-#line 10
- testRunner.And("a liability account 5000 \"Joe\'s Office Supplies\"");
-#line 11
- testRunner.When("I purchase Office Supplies (acct. 1234) for $4000 + $400 tax from \"Joe\'s Office S" +
-                    "upplies\" (acct. 5000)");
+#line 7
+ testRunner.Given("a business");
+#line 8
+ testRunner.And("a revenue account 1236 \"Sales (Services)\"");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "AccountNumber",
@@ -99,39 +83,13 @@ this.FeatureBackground();
                         "Debit",
                         "Credit"});
             table1.AddRow(new string[] {
-                        "1000",
-                        "Asset",
-                        "Cash",
+                        "1236",
+                        "Revenue",
+                        "Sales (Services)",
                         "0.0",
                         "0.0"});
-            table1.AddRow(new string[] {
-                        "1234",
-                        "Asset",
-                        "Office Supplies",
-                        "4000.0",
-                        "0.0"});
-            table1.AddRow(new string[] {
-                        "3002",
-                        "Liability",
-                        "Sales Tax Owing",
-                        "400.0",
-                        "0.0"});
-            table1.AddRow(new string[] {
-                        "5000",
-                        "Liability",
-                        "Joe\'s Office Supplies",
-                        "0.0",
-                        "4400.0"});
-            table1.AddRow(new string[] {
-                        "7000",
-                        "Equity",
-                        "John Smith",
-                        "0.0",
-                        "0.0"});
-#line 12
+#line 9
  testRunner.Then("the trial balance should look like this:", ((string)(null)), table1);
-#line 21
- testRunner.And("the trial balance total should be $4400.");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -2,7 +2,6 @@
 using System.Linq;
 using Bookkeeper;
 using Bookkeeper.Accounting;
-using Bookkeeper.Infrastructure;
 using Bookkeeper.Infrastructure.Interfaces;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -19,21 +18,21 @@ namespace TestBookkeeper
         {
             var expectedTrialBalanceLineItems = TrialBalanceTransform(table);
 
-            var business = (IDoAccounting)ScenarioContext.Current["business"];
+            var bookkeeper = (IDoBookkeeping) ScenarioContext.Current["bookkeeper"];
 
             //For debugging - uncomment to see what the actual trial balance looks like:
             //var reports = ReportPrinter.For(business);
             //reports.Print<ITrialBalance>();
 
-            var actualTrialBalance = business.GetTrialBalance();
+            var actualTrialBalance = bookkeeper.GetTrialBalance();
             Compare(expectedTrialBalanceLineItems, actualTrialBalance.LineItems);
         }
 
         [Then(@"the trial balance total should be \$(\d+)\.")]
         public void ThenTheTrialBalanceTotalShouldBe(decimal expectedTrialBalanceTotal)
         {
-            var business = (IDoAccounting)ScenarioContext.Current["business"];
-            var trialBalance = business.GetTrialBalance();
+            var business = (IAmAConsultingBusiness)ScenarioContext.Current["business"];
+            var trialBalance = business.Bookkeeper.GetTrialBalance();
             trialBalance.IsBalanced.Should().Be.True();
             trialBalance.TotalCreditAmount.Should().Be(expectedTrialBalanceTotal);
             trialBalance.TotalDebitAmount.Should().Be(expectedTrialBalanceTotal);

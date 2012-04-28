@@ -2,7 +2,7 @@
 {
     public interface IPrintReports
     {
-        IDoAccounting ForBusiness { set; }
+        IDoBookkeeping For { set; }
 
         void Print<T>();
         void Print<T>(int id);

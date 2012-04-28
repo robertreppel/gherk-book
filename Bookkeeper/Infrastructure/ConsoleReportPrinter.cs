@@ -6,19 +6,19 @@ namespace Bookkeeper.Infrastructure
 {
     internal class ConsoleReportPrinter : IPrintReports
     {
-        private IDoAccounting _business;
+        private IDoBookkeeping _bookkeeper;
 
-        public IDoAccounting ForBusiness { set { _business = value; } }
+        public IDoBookkeeping For { set { _bookkeeper = value; } }
 
         public void Print<T>()
         {
             var reportName = typeof(T).Name;
             if(reportName == "ITrialBalance")
             {
-                PrintTrialBalance(_business.GetTrialBalance());
+                PrintTrialBalance(_bookkeeper.GetTrialBalance());
             } else if(reportName == "IAccount")
             {
-                PrintStatementFor(_business.GetAccount(123));
+                PrintStatementFor(_bookkeeper.GetAccount(123));
             } else
             {
                 throw new ReportingException("Unknown report: '" + reportName + "'.");
@@ -30,11 +30,11 @@ namespace Bookkeeper.Infrastructure
             var reportName = typeof(T).Name;
             if (reportName == "ITrialBalance")
             {
-                PrintTrialBalance(_business.GetTrialBalance());
+                PrintTrialBalance(_bookkeeper.GetTrialBalance());
             }
             else if (reportName == "IAccount")
             {
-                PrintStatementFor(_business.GetAccount(id));
+                PrintStatementFor(_bookkeeper.GetAccount(id));
             }
             else
             {

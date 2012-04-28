@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Bookkeeper.Infrastructure.Interfaces;
 
-[assembly: InternalsVisibleTo("TestBookkeeper")]
 namespace Bookkeeper.Infrastructure
 {
     public static class Ioc 
@@ -21,6 +19,10 @@ namespace Bookkeeper.Infrastructure
             if(typeName == "IPrintReports")
             {
                 return (T) (new ConsoleReportPrinter() as IPrintReports);
+            }
+            if (typeName == "IDoBookkeeping")
+            {
+                return (T)(new Bookkeep(Ioc.Resolve<IJournalRepository>(), Ioc.Resolve<IGeneralLedgerRepository>()) as IDoBookkeeping);
             }
             throw new TypeLoadException(String.Format("Cannot resolve the type '{0}'", typeName));
         }

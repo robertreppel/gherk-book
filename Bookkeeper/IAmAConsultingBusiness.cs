@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Bookkeeper.Accounting;
-using Bookkeeper.Infrastructure.Interfaces;
 
 namespace Bookkeeper
 {
-    public interface IDoAccounting
+    public interface IAmAConsultingBusiness
     {
-        void CreateNewAccount(int accountNumber, string accountName, AccountType type);
 
         void RecordTaxFreeSale(int customerAccountNo, decimal amount, DateTime transactionDate, string transactionReference);
 
@@ -22,15 +19,9 @@ namespace Bookkeeper
 
         void RecordCashInjectionByOwner(decimal amount, DateTime transactionDate, string transactionReference);
 
-
-        IEnumerable<IAccount> GetChartOfAccounts();
-        IEnumerable<IJournalEntry> GetJournal();
-        ITrialBalance GetTrialBalance();
-        IAccount GetAccount(int accountNo);
-
         int SalesTaxOwingAcctNo { get;  }
-        int SalesTaxPaidAcctNo { get;  }
         int CashRegisterAcctNo { get;  }
         int OwnersEquityAcctNo { get; }
+        IDoBookkeeping Bookkeeper { get; }
     }
 }
