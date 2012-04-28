@@ -10,10 +10,6 @@ namespace Bookkeeper
     {
         private readonly SubLedger _subLedger;
 
-        public static IDoBookkeeping Create() {
-            return new Bookkeeping(Ioc.Resolve<IJournal>(), Ioc.Resolve<ISubLedger>());
-        }
-
         internal Bookkeeping(IJournal journal, ISubLedger subLedger)
         {
             _subLedger = (SubLedger) subLedger;

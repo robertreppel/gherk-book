@@ -72,7 +72,8 @@ namespace TestBookkeeper
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("a business");
+ testRunner.Given("a Accounts Receivable subledger with id 3001 and a revenue account no. 3000 as co" +
+                    "ntrolling account");
 #line 8
  testRunner.And("a revenue account 1236 \"Sales (Services)\"");
 #line hidden

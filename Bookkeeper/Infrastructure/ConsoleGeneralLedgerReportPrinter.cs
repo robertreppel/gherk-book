@@ -27,12 +27,16 @@ namespace Bookkeeper.Infrastructure
             var reportName = typeof(T).Name;
             if (reportName == "IAccount")
             {
-                PrintStatementFor(_subLedger.Accounts[accountNumber]);
+                PrintStatementFor(AccountWith(accountNumber));
             }
             else
             {
                 throw new ReportingException("Unknown report: '" + reportName + "'.");
             }
+        }
+
+        private IAccount AccountWith(int accountNumber) {
+            return (from a in _subLedger.Accounts where a.AccountNumber == accountNumber select a).FirstOrDefault();
         }
 
 

@@ -4,7 +4,7 @@
 	- Record transactions in the ledger
 
 Scenario: Create an account
-	Given a business
+	Given a Accounts Receivable subledger with id 3001 and a revenue account no. 3000 as controlling account
 	And a revenue account 1236 "Sales (Services)"
 	Then the trial balance should look like this:
          | AccountNumber | AcctType  | AccountName		 | Debit | Credit |

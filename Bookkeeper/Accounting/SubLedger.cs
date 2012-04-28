@@ -6,21 +6,42 @@ using Bookkeeper.Infrastructure.Interfaces;
 
 namespace Bookkeeper.Accounting
 {
-    class SubLedger : ISubLedger {
+    public class SubLedger : ISubLedger {
+        public static SubLedger CreateSubLedger(int ledgerId, string ledgerName, int controllingAccountNumber, AccountType controllingAccountType) {
+            return new SubLedger(ledgerId, ledgerName, controllingAccountNumber, controllingAccountType);
+        }
+
+        private readonly Dictionary<int, Account> _ledger;
+
+        private SubLedger(int ledgerId, string ledgerName, int controllingAccountNumber, AccountType controllingAccountType) {
+            _ledger = new Dictionary<int, Account>();
+            Name = ledgerName;
+
+            _controllingAccount = new Account(ledgerId, ledgerName, controllingAccountType);
+        }
+
+        private readonly Account _controllingAccount;
+
+        public IAccount ControllingAccount {
+            get { return _controllingAccount; }
+
+        }
+
+        public string Name { get; private set; }
+
         public ITrialBalance GetTrialBalance() {
-            throw new NotImplementedException();
+            return new TrialBalance(this);
         }
 
-        public Dictionary<int, IAccount> Accounts {
-            get { throw new NotImplementedException(); }
+        public IEnumerable<IAccount> Accounts {
+            get { return _ledger.Values; }
         }
 
-        public void AddAccount(Account account) {
-            throw new NotImplementedException();
+        public void AddAccount(int accountNo, string accountName, AccountType accountType) {
+            var newAccount = new Account(accountNo, accountName, accountType);
+            _ledger.Add(accountNo, newAccount);
         }
 
-        public Account GetAccount(int customerAccountNo) {
-            throw new NotImplementedException();
-        }
+
     }
 }

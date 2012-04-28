@@ -46,7 +46,6 @@
     <Compile Include="Accounting\JournalEntry.cs" />
     <Compile Include="Accounting\TrialBalance.cs" />
     <Compile Include="Accounting\TrialBalanceLineItem.cs" />
-    <Compile Include="Bookkeeping.cs" />
     <Compile Include="IAmAConsultingBusiness.cs" />
     <Compile Include="IDoBookkeeping.cs" />
     <Compile Include="ISubLedger.cs" />

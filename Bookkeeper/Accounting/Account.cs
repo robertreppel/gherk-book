@@ -7,26 +7,23 @@ namespace Bookkeeper.Accounting
 {
     internal class Account : IAccount
     {
-        private IJournalRepository _journal;
         public int AccountNumber { get; private set; }
         public string Name { get; set; }
         public AccountType Type { get; private set; }
 
-        public IEnumerable<IJournalEntry> Transactions 
-        { get
-        {
-            var transactions = _journal.EntriesFor(AccountNumber);
-                return transactions;
-            } 
+        private List<IJournalEntry> _transactions;
+
+        public IEnumerable<IJournalEntry> Transactions {
+            get { return _transactions; }
         }
 
         public decimal Balance
         {
              get
              {
-                 var debits = (from e in _journal.EntriesFor(AccountNumber)
+                 var debits = (from e in Transactions
                                select e.DebitAmount).Sum();
-                 var credits = (from e in _journal.EntriesFor(AccountNumber)
+                 var credits = (from e in Transactions
                                select e.CreditAmount).Sum();
 
                  var balance = debits - credits;
@@ -108,7 +105,7 @@ namespace Bookkeeper.Accounting
                     }
                     break;
             }
-            _journal.Add(journalEntry);
+            _transactions.Add(journalEntry);
         }
 
         private IJournalEntry Debit(decimal amount, DateTime transactionDate, string transactionReference)
@@ -137,11 +134,8 @@ namespace Bookkeeper.Accounting
             AccountNumber = accountNumber;
             Name = name;
             Type = accountAccountType;
-            _journal = null;
+            _transactions = new List<IJournalEntry>();
         }
-
-        public IJournalRepository Journal { set { _journal = value; } }
-
 
 
         internal class AccountException : Exception
