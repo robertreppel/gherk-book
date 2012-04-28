@@ -5,17 +5,15 @@ using Bookkeeper.Infrastructure.Interfaces;
 
 namespace Bookkeeper.Accounting
 {
-    public class Business : IAmAConsultingBusiness
+    public class Business : Bookkeeping, IAmAConsultingBusiness
     {
-        private readonly IDoBookkeeping _bookkeeper;
         const int SalesTaxOwing = 3002;
         const int CashRegister = 1000;
         const int OwnerEquity = 7000;
 
-        public static IAmAConsultingBusiness SetUpAccounting()
-        {
-            var bookkeeper = Ioc.Resolve<IDoBookkeeping>();
-            var accountingService = new Business(bookkeeper);
+        public static Business SetUpAccounting() {
+            var subsidiaryLedger = new SubsidiaryLedger();
+            var accountingService = new Business(subsidiaryLedger);
 
             accountingService.CreateSalesTaxOwingAccount();
             accountingService.CreateCashRegisterAccount();
@@ -23,8 +21,6 @@ namespace Bookkeeper.Accounting
 
             return accountingService;
         }
-
-        public IDoBookkeeping Bookkeeper { get { return _bookkeeper; }}
 
         public int CashRegisterAcctNo
         {
@@ -45,22 +41,22 @@ namespace Bookkeeper.Accounting
  
         public void RecordTaxFreeSale(int customerAccountNo, decimal amount, DateTime transactionDate, string transactionReference)
         {
-            var cashAccount = _bookkeeper.GetAccount(CashRegister);
+            var cashAccount = SubsidiaryLedger.GetAccount(customerAccountNo);
             cashAccount.RecordTransaction(amount,transactionDate, transactionReference);
 
-            var customerAccount = _bookkeeper.GetAccount(customerAccountNo);
+            var customerAccount = _subsidiaryLedger.Accounts;
             customerAccount.RecordTransaction(amount, transactionDate, transactionReference);
         }
 
         public void RecordTaxableSale(int customerAccountNo, decimal netAmount, decimal salesTaxAmount, DateTime transactionDate, string transactionReference)
         {
-            var cashAccount = _bookkeeper.GetAccount(CashRegister);
+            var cashAccount = _subsidiaryLedger.Accounts;
             cashAccount.RecordTransaction(netAmount + salesTaxAmount, transactionDate, transactionReference);
 
-            var customerAccount = _bookkeeper.GetAccount(customerAccountNo);
+            var customerAccount = _subsidiaryLedger.Accounts;
             customerAccount.RecordTransaction(netAmount, transactionDate, transactionReference);
 
-            var salesTaxOwingAccount = _bookkeeper.GetAccount(SalesTaxOwing);
+            var salesTaxOwingAccount = _subsidiaryLedger.Accounts;
             salesTaxOwingAccount.RecordTransaction(salesTaxAmount, transactionDate, transactionReference);
         }
 
@@ -76,34 +72,34 @@ namespace Bookkeeper.Accounting
 
         public void RecordPaymentTo(int recipientAccountNo, decimal amount, DateTime transactionDate, string transactionReference)
         {
-            var cashAccount = _bookkeeper.GetAccount(CashRegister);
+            var cashAccount = _subsidiaryLedger.Accounts;
             cashAccount.RecordTransaction((amount * -1), transactionDate, transactionReference);
 
-            var recipientAccount = _bookkeeper.GetAccount(recipientAccountNo);
+            var recipientAccount = _subsidiaryLedger.Accounts;
             recipientAccount.RecordTransaction((amount * -1), transactionDate, transactionReference);
         }
 
         private void RecordAsset(int assetAccountNo, decimal netAmount, DateTime transactionDate, string transactionReference)
         {
-            var assetAccount = _bookkeeper.GetAccount(assetAccountNo);
+            var assetAccount = _subsidiaryLedger.Accounts;
             assetAccount.RecordTransaction(netAmount, transactionDate, transactionReference);
         }
 
         private void RecordAmountOwingTo(int supplierAccountNo, decimal netAmount, DateTime transactionDate, string transactionReference)
         {
-            var supplierAccount = _bookkeeper.GetAccount(supplierAccountNo);
+            var supplierAccount = _subsidiaryLedger.Accounts;
             supplierAccount.RecordTransaction(netAmount, transactionDate, transactionReference);
         }
 
         private void DeductFromSalesTaxOwing(decimal salesTaxAmount, DateTime transactionDate, string transactionReference)
         {
-            var salesTaxOwingAccount = _bookkeeper.GetAccount(SalesTaxOwing);
+            var salesTaxOwingAccount = _subsidiaryLedger.Accounts;
             salesTaxOwingAccount.RecordTransaction((salesTaxAmount * -1), transactionDate, transactionReference);
         }
 
         private void CreateCashRegisterAccount()
         {
-            _bookkeeper.CreateNewAccount(CashRegister, "Cash", AccountType.Asset);
+            _subsidiaryLedger.CreateNewAccount(CashRegister, "Cash", AccountType.Asset);
         }
 
         private void CreateSalesTaxOwingAccount()
@@ -116,25 +112,25 @@ namespace Bookkeeper.Accounting
             _bookkeeper.CreateNewAccount(OwnerEquity, "John Smith", AccountType.Equity);
         }
 
-        private Business(IDoBookkeeping bookkeeper)
+        private Business(ISubsidiaryLedger subsidiaryLedger)
         {
-            _bookkeeper = bookkeeper;
+            _subsidiaryLedger = subsidiaryLedger;
         }
 
         public void RecordCashInvestmentBy(int accountNo, decimal amount, DateTime transactionDate, string transactionReference)
         {
-            _bookkeeper.GetAccount(accountNo).RecordTransaction(amount, transactionDate, transactionReference);
-            var cashAccount = _bookkeeper.GetAccount(CashRegisterAcctNo);
+            _subsidiaryLedger.Accounts.RecordTransaction(amount, transactionDate, transactionReference);
+            var cashAccount = _subsidiaryLedger.Accounts;
             cashAccount.RecordTransaction(amount, transactionDate, transactionReference);
 
         }
 
         public void RecordCashInjectionByOwner(decimal amount, DateTime transactionDate, string transactionReference)
         {
-            var ownerEquityAccount = _bookkeeper.GetAccount(OwnersEquityAcctNo);
+            var ownerEquityAccount = _subsidiaryLedger.Accounts;
             ownerEquityAccount.RecordTransaction(amount, transactionDate, transactionReference);
 
-            var cashAccount = _bookkeeper.GetAccount(CashRegisterAcctNo);
+            var cashAccount = _subsidiaryLedger.Accounts;
             cashAccount.RecordTransaction(amount, transactionDate, transactionReference);
         }
     }

@@ -18,21 +18,21 @@ namespace TestBookkeeper
         {
             var expectedTrialBalanceLineItems = TrialBalanceTransform(table);
 
-            var bookkeeper = (IDoBookkeeping) ScenarioContext.Current["bookkeeper"];
+            var bookkeeping = (IDoBookkeeping) ScenarioContext.Current["bookkeeper"];
 
             //For debugging - uncomment to see what the actual trial balance looks like:
             //var reports = ReportPrinter.For(business);
             //reports.Print<ITrialBalance>();
 
-            var actualTrialBalance = bookkeeper.GetTrialBalance();
+            var actualTrialBalance = bookkeeping.SubLedger.GetTrialBalance();
             Compare(expectedTrialBalanceLineItems, actualTrialBalance.LineItems);
         }
 
         [Then(@"the trial balance total should be \$(\d+)\.")]
         public void ThenTheTrialBalanceTotalShouldBe(decimal expectedTrialBalanceTotal)
         {
-            var business = (IAmAConsultingBusiness)ScenarioContext.Current["business"];
-            var trialBalance = business.Bookkeeper.GetTrialBalance();
+            var business = (IDoBookkeeping) ScenarioContext.Current["business"];
+            var trialBalance = business.SubLedger.GetTrialBalance();
             trialBalance.IsBalanced.Should().Be.True();
             trialBalance.TotalCreditAmount.Should().Be(expectedTrialBalanceTotal);
             trialBalance.TotalDebitAmount.Should().Be(expectedTrialBalanceTotal);

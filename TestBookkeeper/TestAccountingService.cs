@@ -15,16 +15,16 @@ namespace TestBookkeeper
         public void ShouldCreateNewAccount()
         {
             var business = Business.SetUpAccounting();
-            business.Bookkeeper.CreateNewAccount(1001, "Bank Account", AccountType.Asset);
+            business.CreateNewAccount(1001, "Bank Account", AccountType.Asset);
 
 
-            var chartOfAccounts = business.Bookkeeper.GetChartOfAccounts().ToList();
+            var generalLedger = business.SubsidiaryLedger;
 
-            var reports = ReportPrinter.For(business.Bookkeeper);
+            var reports = ReportPrinter.For(generalLedger);
             reports.Print<ITrialBalance>();
 
             //Created account + other accounts generated in CreateAndSetUpAccounts:
-            chartOfAccounts.Count.Should().Be(4);            
+            generalLedger.Accounts.Count.Should().Be(4);            
         }
 
         [Test]
@@ -32,8 +32,8 @@ namespace TestBookkeeper
         public void ShouldNotCreateASecondAccountWithTheSameNumber()
         {
             var business = Business.SetUpAccounting();
-            business.Bookkeeper.CreateNewAccount(1001, "Bank Account", AccountType.Asset);
-            business.Bookkeeper.CreateNewAccount(1001, "Another Account", AccountType.Asset);
+            business.CreateNewAccount(1001, "Bank Account", AccountType.Asset);
+            business.CreateNewAccount(1001, "Another Account", AccountType.Asset);
         }
 
         [Test]
@@ -41,17 +41,17 @@ namespace TestBookkeeper
         {
             var business = Business.SetUpAccounting();
             const int customer = 2000;
-            business.Bookkeeper.CreateNewAccount(customer, "Jim Haskell", AccountType.Revenue);
+            business.CreateNewAccount(customer, "Jim Haskell", AccountType.Revenue);
 
             const decimal totalAmount = 124.0m;
 
             business.RecordTaxFreeSale(customer, totalAmount,DateTime.Today, "item sold");
 
-            var reports = ReportPrinter.For(business.Bookkeeper);
+            var reports = ReportPrinter.For(business.SubsidiaryLedger);
             reports.Print<ITrialBalance>();
 
-            var journal = business.Bookkeeper.GetJournal().ToList();
-            journal.Count.Should().Be(2);
+            business.SubsidiaryLedger.GetTrialBalance().IsBalanced.Should().Be(true);
+            business.SubsidiaryLedger.GetTrialBalance().TotalCreditAmount.Should().Be(124.0m);
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace TestBookkeeper
         {
             var business = Business.SetUpAccounting();
             const int customer = 2001;
-            business.Bookkeeper.CreateNewAccount(customer, "Jemima Jenkins", AccountType.Revenue);
+            business.CreateNewAccount(customer, "Jemima Jenkins", AccountType.Revenue);
             
             const decimal netAmount = 1200.13m;
             const decimal salesTaxAmount = 120.1m;
@@ -68,7 +68,7 @@ namespace TestBookkeeper
             var reports = ReportPrinter.For(business.Bookkeeper);
             reports.Print<ITrialBalance>();
 
-            var trialBalance = business.Bookkeeper.GetTrialBalance();
+            var trialBalance = business.GetTrialBalance();
             Assert.IsTrue(trialBalance.IsBalanced, "Accounts should balance.");
             trialBalance.TotalCreditAmount.Should().Be(netAmount + salesTaxAmount);
             trialBalance.TotalDebitAmount.Should().Be(netAmount + salesTaxAmount);
@@ -79,16 +79,16 @@ namespace TestBookkeeper
         {
             var business = Business.SetUpAccounting();
             const int supplier = 600;
-            business.Bookkeeper.CreateNewAccount(supplier, "Marvin's Office Supplies", AccountType.Liability);
+            business.CreateNewAccount(supplier, "Marvin's Office Supplies", AccountType.Liability);
 
             const int officeSupplies = 9000;
-            business.Bookkeeper.CreateNewAccount(officeSupplies, "Office Supplies", AccountType.Asset);
+            business.CreateNewAccount(officeSupplies, "Office Supplies", AccountType.Asset);
 
             const decimal netAmount = 80.0m;
             const decimal salesTaxAmount = 8.0m;
             business.RecordPurchaseFrom(supplier, officeSupplies, netAmount, salesTaxAmount, DateTime.Today, "item bought");
 
-            var trialBalance = business.Bookkeeper.GetTrialBalance();
+            var trialBalance = business.GetTrialBalance();
             var reports = ReportPrinter.For(business.Bookkeeper);
             reports.Print<ITrialBalance>();
 
@@ -101,12 +101,12 @@ namespace TestBookkeeper
             var business = Business.SetUpAccounting();
             const int officeSupplies = 9000;
 
-            business.Bookkeeper.CreateNewAccount(officeSupplies, "Office Supplies", AccountType.Asset);
+            business.CreateNewAccount(officeSupplies, "Office Supplies", AccountType.Asset);
 
             const int acmeEnterprises = 2005;
-            business.Bookkeeper.CreateNewAccount(acmeEnterprises, "Acme Enterprises, Inc.", AccountType.Revenue);
+            business.CreateNewAccount(acmeEnterprises, "Acme Enterprises, Inc.", AccountType.Revenue);
             const int thelmasTonerShack = 602;
-            business.Bookkeeper.CreateNewAccount(thelmasTonerShack, "Thelma's Toner Shack", AccountType.Liability);
+            business.CreateNewAccount(thelmasTonerShack, "Thelma's Toner Shack", AccountType.Liability);
 
             business.RecordTaxableSale(customerAccountNo: acmeEnterprises,
                                        netAmount: 100.0m,
@@ -124,7 +124,7 @@ namespace TestBookkeeper
 
             business.RecordPaymentTo(thelmasTonerShack, PartialPaymentOf(40.0m), DateTime.Today, "Payment for Inv. 1234");
 
-            var trialBalance = business.Bookkeeper.GetTrialBalance();
+            var trialBalance = business.GetTrialBalance();
 
             var reports = ReportPrinter.For(business.Bookkeeper);
             reports.Print<ITrialBalance>();
@@ -147,17 +147,17 @@ namespace TestBookkeeper
         {
             var business = Business.SetUpAccounting();
             const int customer = 6654;
-            business.Bookkeeper.CreateNewAccount(customer, "Higgins Farm Machinery, Inc.", AccountType.Revenue);
+            business.CreateNewAccount(customer, "Higgins Farm Machinery, Inc.", AccountType.Revenue);
 
             business.RecordTaxFreeSale(6654, 1200.0m, DateTime.Now, "IT Consulting Services");
 
-            var reports = ReportPrinter.For(business.Bookkeeper);
+            var reports = ReportPrinter.For(business.SubsidiaryLedger);
             reports.Print<ITrialBalance>();
 
-            var cash = business.Bookkeeper.GetAccount(business.CashRegisterAcctNo);
+            var cash = business.SubsidiaryLedger.Accounts[business.CashRegisterAcctNo];
             cash.Balance.Should().Be(1200.0m);
 
-            var customerAccount = business.Bookkeeper.GetAccount(customer);
+            var customerAccount = business.SubsidiaryLedger.Accounts[customer];
             customerAccount.Balance.Should().Be(1200);
         }
 
@@ -166,17 +166,17 @@ namespace TestBookkeeper
         {
             var business = Business.SetUpAccounting();
             const int investorMikeLewis = 3450;
-            business.Bookkeeper.CreateNewAccount(investorMikeLewis, "Mike Lewis Investment", AccountType.Liability);
+            business.CreateNewAccount(investorMikeLewis, "Mike Lewis Investment", AccountType.Liability);
             business.RecordCashInvestmentBy(investorMikeLewis, 10000.0m, DateTime.Now, "Grubstake provided by Uncle Mike.");
 
-            var reports = ReportPrinter.For(business.Bookkeeper);
+            var reports = ReportPrinter.For(business.SubsidiaryLedger);
             reports.Print<ITrialBalance>();
             reports.Print<IAccount>(investorMikeLewis);
 
-            var cash = business.Bookkeeper.GetAccount(business.CashRegisterAcctNo);
+            var cash = business.SubsidiaryLedger.Accounts[business.CashRegisterAcctNo];
             cash.Balance.Should().Be(10000.0m);
 
-            var mikeLewisAccount = business.Bookkeeper.GetAccount(investorMikeLewis);
+            var mikeLewisAccount = business.SubsidiaryLedger.Accounts[investorMikeLewis];
             mikeLewisAccount.Balance.Should().Be(10000.0m);
         }
 
@@ -186,13 +186,15 @@ namespace TestBookkeeper
             var business = Business.SetUpAccounting();
             business.RecordCashInjectionByOwner(5000.0m, DateTime.Now, "John Smith, cash injection into business");
 
-            var ownersEquity = business.Bookkeeper.GetAccount(business.OwnersEquityAcctNo);
+            var ownersEquity = business.SubsidiaryLedger.Accounts[business.OwnersEquityAcctNo];
+            
             ownersEquity.Balance.Should().Be(5000.0m);
 
-            var cash = business.Bookkeeper.GetAccount(business.CashRegisterAcctNo);
+            var cash = business.SubsidiaryLedger.Accounts[business.CashRegisterAcctNo];
+            
             cash.Balance.Should().Be(5000.0m);
 
-            var reports = ReportPrinter.For(business.Bookkeeper);
+            var reports = ReportPrinter.For(business.SubsidiaryLedger);
             reports.Print<ITrialBalance>();
             reports.Print<IAccount>(business.OwnersEquityAcctNo);
             reports.Print<IAccount>(business.CashRegisterAcctNo);

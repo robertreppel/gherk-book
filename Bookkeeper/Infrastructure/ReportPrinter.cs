@@ -2,10 +2,10 @@
 {
     public static class ReportPrinter
     {
-        public static IPrintReports For(IDoBookkeeping bookkeeper)
+        public static IPrintGeneralLedgerReports For(ISubLedger subLedger)
         {
-            var reportPrinter = Ioc.Resolve<IPrintReports>();
-            reportPrinter.For = bookkeeper;
+            var reportPrinter = Ioc.Resolve<IPrintGeneralLedgerReports>();
+            reportPrinter.For = subLedger;
             return reportPrinter;
         }
     }

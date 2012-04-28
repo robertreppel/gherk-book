@@ -9,7 +9,7 @@ namespace Bookkeeper.Infrastructure
     {
         private readonly Dictionary<int, Account> _generalLedger = new Dictionary<int, Account>();
 
-        public IEnumerable<IAccount> GetAccounts()
+        public IEnumerable<IAccount> Accounts()
         {
             return _generalLedger.Values;
         }

@@ -2,6 +2,7 @@
 using Bookkeeper;
 using Bookkeeper.Accounting;
 using TechTalk.SpecFlow;
+using Business = Bookkeeper.Accounting.Business;
 
 namespace TestBookkeeper
 {

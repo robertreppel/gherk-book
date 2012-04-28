@@ -6,11 +6,11 @@ namespace TestBookkeeper {
     [Binding]
     public class BookkeepingStepDefinitions {
 
-        [Given(@"a business")]
-        public void GivenABusiness()
+        [Given(@"a (.*) subledger with controlling account no. (\d+")]
+        public void GivenASubledger(string ledgerName, int controllingAccountNumber)
         {
             if (!ScenarioContext.Current.ContainsKey("bookkeeper")) {
-                var bookkeeper = Bookkeep.Create();
+                var bookkeeper = Bookkeeping.Create();
                 ScenarioContext.Current.Add("bookkeeper", bookkeeper);
             }
         }

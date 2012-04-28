@@ -56,28 +56,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookkeepingStepDefinitions.cs" />
-    <Compile Include="ConsultingBusinessStepDefinition.cs" />
-    <Compile Include="PurchaseSomething.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>PurchaseSomething.feature</DependentUpon>
-    </Compile>
     <Compile Include="RecordBookkeepingTransactions.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RecordBookkeepingTransactions.feature</DependentUpon>
     </Compile>
-    <Compile Include="TestAccountingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrialBalanceValidationStepDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="PurchaseSomething.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>PurchaseSomething.feature.cs</LastGenOutput>
-    </None>
     <None Include="RecordBookkeepingTransactions.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>RecordBookkeepingTransactions.feature.cs</LastGenOutput>

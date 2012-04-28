@@ -3,7 +3,7 @@ using Bookkeeper.Accounting;
 
 namespace Bookkeeper
 {
-    public interface IAmAConsultingBusiness
+    public interface IAmAConsultingBusiness : IDoBookkeeping
     {
 
         void RecordTaxFreeSale(int customerAccountNo, decimal amount, DateTime transactionDate, string transactionReference);
@@ -22,6 +22,5 @@ namespace Bookkeeper
         int SalesTaxOwingAcctNo { get;  }
         int CashRegisterAcctNo { get;  }
         int OwnersEquityAcctNo { get; }
-        IDoBookkeeping Bookkeeper { get; }
     }
 }
