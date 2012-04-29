@@ -8,7 +8,7 @@ With the addition of SpecFlow steps it's beginning to look like a kind of "Accou
 It might be possible for developers to sit down with accountants and model the parts of applications which need to record
 financial transactions:
 
-Scenario: Record a transaction
+	Scenario: Record a transaction
 	Given a Accounts Receivable ledger with id 3001 and a revenue account no. 3000 as controlling account
 	And a revenue account 1236 "Sales (Services)" in Accounts Receivable
 
