@@ -32,6 +32,7 @@ Scenario: Record two transactions
 	And a Assets subledger with id 4001 and a asset account no. 4000 as controlling account
 	And a asset account 2000 "Bank" in Assets
 
+
 	When I record the following transaction in the Accounts Receivable ledger:
 		| AccountNumber | AccountName      | Date      | TransactionReference		    | Amount    |
 		| 1236          | Sales (Services) | 12/3/2011 | Consulting,  Harry Slayton     | 2034.12   |
@@ -40,6 +41,7 @@ Scenario: Record two transactions
 		| AccountNumber | AccountName      | Date      | TransactionReference		    | Amount    |
 		| 2000          | Bank			   | 12/3/2011 | Consulting,  Harry Slayton     | 2034.12   |
 		
+
 	Then the trial balance of the Accounts Receivable subledger should look like this:
          | AccountNumber | AcctType  | AccountName		 | Debit	| Credit	|
          |       1236    |   Revenue | Sales (Services)  | 0.0		|   2034.12	|

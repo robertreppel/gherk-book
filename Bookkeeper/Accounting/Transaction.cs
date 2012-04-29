@@ -3,9 +3,9 @@ using Bookkeeper.Infrastructure.Interfaces;
 
 namespace Bookkeeper.Accounting
 {
-    internal class JournalEntry : IJournalEntry
+    internal class Transaction : ITransaction
     {
-        public JournalEntry(DateTime transactionDate, string transactionReference, int accountNo, decimal debitAmount, decimal creditAmount)
+        public Transaction(DateTime transactionDate, string transactionReference, int accountNo, decimal debitAmount, decimal creditAmount)
         {
             TransactionDate = transactionDate;
             AccountNo = accountNo;

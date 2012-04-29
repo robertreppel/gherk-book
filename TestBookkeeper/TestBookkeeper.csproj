@@ -68,6 +68,7 @@
       <DependentUpon>RecordBookkeepingTransactions.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBookkeeping.cs" />
     <Compile Include="TrialBalanceValidationStepDefinition.cs" />
   </ItemGroup>
   <ItemGroup>

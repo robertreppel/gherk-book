@@ -4,18 +4,18 @@ using Bookkeeper.Infrastructure.Interfaces;
 
 namespace Bookkeeper.Infrastructure
 {
-    internal class ConsoleGeneralLedgerReportPrinter : IPrintGeneralLedgerReports
+    internal class ConsoleLedgerReportPrinter : IPrintLedgerReports
     {
-        private ISubLedger _subLedger;
+        private ILedger _ledger;
 
-        public ISubLedger For { set { _subLedger = value; } }
+        public ILedger For { set { _ledger = value; } }
 
         public void Print<T>()
         {
             var reportName = typeof(T).Name;
             if(reportName == "ITrialBalance")
             {
-                PrintTrialBalance(_subLedger.GetTrialBalance());
+                PrintTrialBalance(_ledger.GetTrialBalance());
             } else 
             {
                 throw new ReportingException("Unknown report: '" + reportName + "'.");
@@ -36,7 +36,7 @@ namespace Bookkeeper.Infrastructure
         }
 
         private IAccount AccountWith(int accountNumber) {
-            return (from a in _subLedger.Accounts where a.AccountNumber == accountNumber select a).FirstOrDefault();
+            return (from a in _ledger.Accounts where a.AccountNumber == accountNumber select a).FirstOrDefault();
         }
 
 

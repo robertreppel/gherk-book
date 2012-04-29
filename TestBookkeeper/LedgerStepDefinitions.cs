@@ -13,14 +13,14 @@ namespace TestBookkeeper {
         public void GivenASubledger(string ledgerName, int ledgerId, AccountType controllingAccountType, int controllingAccountNumber)
         {
 
-            var subledger = SubLedger.CreateSubLedger(ledgerId, ledgerName, controllingAccountNumber,
+            var subledger = Ledger.CreateLedger(ledgerId, ledgerName, controllingAccountNumber,
                                                         controllingAccountType);
             ScenarioContext.Current.Add(ledgerName, subledger);
         }
 
         [Given(@"[a|an] (asset|liability|revenue|expense|equity) account (\d+) ""(.*)"" in (.*)")]
         public void CreateNewAccount(AccountType accountType, int accountNo, string accountName, string ledgerName) {
-            var ledger = (ISubLedger) ScenarioContext.Current[ledgerName];
+            var ledger = (ILedger) ScenarioContext.Current[ledgerName];
             ledger.AddAccount(accountNo, accountName, accountType);
         }
 
@@ -30,7 +30,7 @@ namespace TestBookkeeper {
         }
 
         private static void RecordIn(string ledgerName, Table transactions) {
-            var ledger = (ISubLedger)ScenarioContext.Current[ledgerName];
+            var ledger = (ILedger)ScenarioContext.Current[ledgerName];
             foreach(var transaction in transactions.Rows.ToList()) {
                 var accountNumber = Convert.ToInt32(transaction["AccountNumber"]);
                 var date = Convert.ToDateTime(transaction["Date"]);
@@ -46,7 +46,7 @@ namespace TestBookkeeper {
         [Then(@"the (.*) ledger should (not balance|balance)\.")]
         public void TrialBalanceOf(string ledgerName, string shouldBalanceOrNot)
         {
-            var ledger = (ISubLedger) ScenarioContext.Current[ledgerName];
+            var ledger = (ILedger) ScenarioContext.Current[ledgerName];
             var trialBalance = ledger.GetTrialBalance();
             if(shouldBalanceOrNot == "balance") {
                 trialBalance.IsBalanced.Should().Be(true);

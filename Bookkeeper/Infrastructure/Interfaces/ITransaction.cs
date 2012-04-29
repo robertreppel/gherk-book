@@ -2,7 +2,7 @@
 
 namespace Bookkeeper.Infrastructure.Interfaces
 {
-    public interface IJournalEntry    
+    public interface ITransaction    
     {
         DateTime TransactionDate { get; }
         int AccountNo { get; }

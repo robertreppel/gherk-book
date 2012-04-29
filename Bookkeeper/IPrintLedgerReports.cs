@@ -1,8 +1,8 @@
 ﻿namespace Bookkeeper
 {
-    public interface IPrintGeneralLedgerReports
+    public interface IPrintLedgerReports
     {
-        ISubLedger For { set; }
+        ILedger For { set; }
 
         void Print<T>();
         void Print<T>(int accountNumber);

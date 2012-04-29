@@ -173,7 +173,7 @@ this.ScenarioSetup(scenarioInfo);
                         "12/3/2011",
                         "Consulting,  Harry Slayton",
                         "2034.12"});
-#line 35
+#line 36
  testRunner.When("I record the following transaction in the Accounts Receivable ledger:", ((string)(null)), table4);
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -188,7 +188,7 @@ this.ScenarioSetup(scenarioInfo);
                         "12/3/2011",
                         "Consulting,  Harry Slayton",
                         "2034.12"});
-#line 39
+#line 40
  testRunner.And("I record the following transaction in the Assets ledger:", ((string)(null)), table5);
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -203,9 +203,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Sales (Services)",
                         "0.0",
                         "2034.12"});
-#line 43
+#line 45
  testRunner.Then("the trial balance of the Accounts Receivable subledger should look like this:", ((string)(null)), table6);
-#line 46
+#line 48
  testRunner.And("the Accounts Receivable ledger should not balance.");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -220,9 +220,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Bank",
                         "2034.12",
                         "0.0"});
-#line 48
+#line 50
  testRunner.And("the trial balance of the Assets subledger should look like this:", ((string)(null)), table7);
-#line 51
+#line 53
  testRunner.And("the Assets ledger should not balance.");
 #line hidden
             this.ScenarioCleanup();

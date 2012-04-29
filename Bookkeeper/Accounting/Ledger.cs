@@ -4,14 +4,14 @@ using Bookkeeper.Infrastructure.Interfaces;
 
 namespace Bookkeeper.Accounting
 {
-    public class SubLedger : ISubLedger {
-        public static SubLedger CreateSubLedger(int ledgerId, string ledgerName, int controllingAccountNumber, AccountType controllingAccountType) {
-            return new SubLedger(ledgerId, ledgerName, controllingAccountNumber, controllingAccountType);
+    public class Ledger : ILedger {
+        public static Ledger CreateLedger(int ledgerId, string ledgerName, int controllingAccountNumber, AccountType controllingAccountType) {
+            return new Ledger(ledgerId, ledgerName, controllingAccountType);
         }
 
         private readonly Dictionary<int, Account> _ledger;
 
-        private SubLedger(int ledgerId, string ledgerName, int controllingAccountNumber, AccountType controllingAccountType) {
+        private Ledger(int ledgerId, string ledgerName, AccountType controllingAccountType) {
             _ledger = new Dictionary<int, Account>();
             Name = ledgerName;
 

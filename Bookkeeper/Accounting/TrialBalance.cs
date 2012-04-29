@@ -7,7 +7,7 @@ namespace Bookkeeper.Accounting
     {
         public bool IsBalanced { get; set; }
 
-        internal TrialBalance(ISubLedger ledger) {
+        internal TrialBalance(ILedger ledger) {
             var accounts = ledger.Accounts;
             GenerateFrom(accounts);
         }

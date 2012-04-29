@@ -11,9 +11,9 @@ namespace Bookkeeper.Accounting
         public string Name { get; set; }
         public AccountType Type { get; private set; }
 
-        private readonly List<IJournalEntry> _transactions;
+        private readonly List<ITransaction> _transactions;
 
-        public IEnumerable<IJournalEntry> Transactions {
+        public IEnumerable<ITransaction> Transactions {
             get { return _transactions; }
         }
 
@@ -49,72 +49,72 @@ namespace Bookkeeper.Accounting
         public void RecordTransaction(decimal amount, DateTime transactionDate, string transactionReference)
         {
             if (amount == 0) throw new AccountException("Cannot record a transaction with a zero amount.");
-            IJournalEntry journalEntry = null;
+            ITransaction transaction = null;
 
             switch (Type)
             {
                 case AccountType.Asset:
                     if (amount > 0)
                     {
-                        journalEntry = Debit(amount, transactionDate, transactionReference);
+                        transaction = Debit(amount, transactionDate, transactionReference);
                     }
                     else
                     {
-                        journalEntry = Credit(amount, transactionDate, transactionReference);
+                        transaction = Credit(amount, transactionDate, transactionReference);
                     }
                     break;
                 case AccountType.Liability:
                     if (amount > 0)
                     {
-                        journalEntry = Credit(amount, transactionDate, transactionReference);
+                        transaction = Credit(amount, transactionDate, transactionReference);
                     }
                     else
                     {
-                        journalEntry = Debit(amount, transactionDate, transactionReference);
+                        transaction = Debit(amount, transactionDate, transactionReference);
                     }
                     break;
                 case AccountType.Revenue:
                     if (amount > 0)
                     {
-                        journalEntry = Credit(amount, transactionDate, transactionReference);
+                        transaction = Credit(amount, transactionDate, transactionReference);
                     }
                     else
                     {
-                        journalEntry = Debit(amount, transactionDate, transactionReference);
+                        transaction = Debit(amount, transactionDate, transactionReference);
                     }
                     break;
                 case AccountType.Expense:
                     if (amount > 0)
                     {
-                        journalEntry = Debit(amount, transactionDate, transactionReference);
+                        transaction = Debit(amount, transactionDate, transactionReference);
                     }
                     else
                     {
-                        journalEntry = Credit(amount, transactionDate, transactionReference);
+                        transaction = Credit(amount, transactionDate, transactionReference);
                     }
                     break;
                 case AccountType.Equity:
                     if (amount > 0)
                     {
-                        journalEntry = Credit(amount, transactionDate, transactionReference);
+                        transaction = Credit(amount, transactionDate, transactionReference);
                     }
                     else
                     {
-                        journalEntry = Debit(amount, transactionDate, transactionReference);
+                        transaction = Debit(amount, transactionDate, transactionReference);
                     }
                     break;
             }
-            _transactions.Add(journalEntry);
+            _transactions.Add(transaction);
         }
 
-        private IJournalEntry Debit(decimal amount, DateTime transactionDate, string transactionReference)
+        private ITransaction Debit(decimal amount, DateTime transactionDate, string transactionReference)
         {
-            return new JournalEntry(transactionDate, transactionReference, AccountNumber, Math.Abs(amount), 0.0m);
+            return new Transaction(transactionDate, transactionReference, AccountNumber, Math.Abs(amount), 0.0m);
         }
 
-        private JournalEntry Credit(decimal amount, DateTime transactionDate, string transactionReference)
+        private Transaction Credit(decimal amount, DateTime transactionDate, string transactionReference)
         {
-            return new JournalEntry(transactionDate, transactionReference, AccountNumber, 0.0m, Math.Abs(amount));
+            return new Transaction(transactionDate, transactionReference, AccountNumber, 0.0m, Math.Abs(amount));
         }
 
         private static decimal DebitsIncreaseThe(decimal balance)
@@ -133,7 +133,7 @@ namespace Bookkeeper.Accounting
             AccountNumber = accountNumber;
             Name = name;
             Type = accountAccountType;
-            _transactions = new List<IJournalEntry>();
+            _transactions = new List<ITransaction>();
         }
 
 

@@ -4,7 +4,7 @@ using Bookkeeper.Accounting;
 using Bookkeeper.Infrastructure.Interfaces;
 
 namespace Bookkeeper {
-    public interface ISubLedger {
+    public interface ILedger {
         ITrialBalance GetTrialBalance();
         IEnumerable<IAccount> Accounts { get; }
         void AddAccount(int accountNo, string accountName, AccountType accountType);

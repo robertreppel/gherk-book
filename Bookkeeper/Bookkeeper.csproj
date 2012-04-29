@@ -42,19 +42,19 @@
   <ItemGroup>
     <Compile Include="Accounting\Account.cs" />
     <Compile Include="Accounting\AccountType.cs" />
-    <Compile Include="Accounting\SubLedger.cs" />
-    <Compile Include="Accounting\JournalEntry.cs" />
+    <Compile Include="Accounting\Ledger.cs" />
+    <Compile Include="Accounting\Transaction.cs" />
     <Compile Include="Accounting\TrialBalance.cs" />
     <Compile Include="Accounting\TrialBalanceLineItem.cs" />
-    <Compile Include="ISubLedger.cs" />
-    <Compile Include="Infrastructure\ConsoleGeneralLedgerReportPrinter.cs" />
+    <Compile Include="ILedger.cs" />
+    <Compile Include="Infrastructure\ConsoleLedgerReportPrinter.cs" />
     <Compile Include="Infrastructure\Interfaces\IAccount.cs" />
-    <Compile Include="Infrastructure\Interfaces\IJournalEntry.cs" />
+    <Compile Include="Infrastructure\Interfaces\ITransaction.cs" />
     <Compile Include="Infrastructure\Interfaces\ITrialBalance.cs" />
     <Compile Include="Infrastructure\Interfaces\ITrialBalanceLineItem.cs" />
     <Compile Include="Infrastructure\Ioc.cs" />
     <Compile Include="Infrastructure\ReportPrinter.cs" />
-    <Compile Include="IPrintGeneralLedgerReports.cs" />
+    <Compile Include="IPrintLedgerReports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
