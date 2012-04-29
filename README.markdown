@@ -9,6 +9,7 @@ It might be possible for developers to sit down with accountants and model the p
 financial transactions:
 
 	Scenario: Record a transaction
+	
 	Given a Accounts Receivable ledger with id 3001 and a revenue account no. 3000 as controlling account
 	And a revenue account 1236 "Sales (Services)" in Accounts Receivable
 
