@@ -2,6 +2,7 @@
 using System.Linq;
 using Bookkeeper;
 using Bookkeeper.Accounting;
+using Bookkeeper.Infrastructure;
 using Bookkeeper.Infrastructure.Interfaces;
 using NUnit.Framework;
 using SharpTestsEx;
@@ -13,18 +14,18 @@ namespace TestBookkeeper
     [Binding]
     public class TrialBalanceValidationStepDefinition
     {
-        [Then(@"the trial balance should look like this:")]
-        public void ThenTheTrialBalanceShouldLookLikeThis(Table table)
+        [Then(@"the trial balance of the (.*) subledger should look like this:")]
+        public void ThenTheTrialBalanceShouldLookLikeThis(string ledgerName, Table table)
         {
             var expectedTrialBalanceLineItems = TrialBalanceTransform(table);
 
-            var subledger = (ISubLedger) ScenarioContext.Current["subledger"];
+            var ledger = (ISubLedger) ScenarioContext.Current[ledgerName];
 
             //For debugging - uncomment to see what the actual trial balance looks like:
-            //var reports = ReportPrinter.For(business);
-            //reports.Print<ITrialBalance>();
+            var reports = ReportPrinter.For(ledger);
+            reports.Print<ITrialBalance>();
 
-            var actualTrialBalance = subledger.GetTrialBalance();
+            var actualTrialBalance = ledger.GetTrialBalance();
             Compare(expectedTrialBalanceLineItems, actualTrialBalance.LineItems);
         }
 

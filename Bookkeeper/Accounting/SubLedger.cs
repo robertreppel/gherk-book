@@ -42,6 +42,8 @@ namespace Bookkeeper.Accounting
             _ledger.Add(accountNo, newAccount);
         }
 
-
+        public void RecordTransaction(int accountNumber, DateTime transactionDate, string transactionReference, decimal amount) {
+            _ledger[accountNumber].RecordTransaction(amount, transactionDate, transactionReference);
+        }
     }
 }

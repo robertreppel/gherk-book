@@ -75,7 +75,7 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.Given("a Accounts Receivable subledger with id 3001 and a revenue account no. 3000 as co" +
                     "ntrolling account");
 #line 8
- testRunner.And("a revenue account 1236 \"Sales (Services)\"");
+ testRunner.And("a revenue account 1236 \"Sales (Services)\" in Accounts Receivable");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "AccountNumber",
@@ -90,7 +90,55 @@ this.ScenarioSetup(scenarioInfo);
                         "0.0",
                         "0.0"});
 #line 9
- testRunner.Then("the trial balance should look like this:", ((string)(null)), table1);
+ testRunner.Then("the trial balance of the Accounts Receivable subledger should look like this:", ((string)(null)), table1);
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Record a transaction")]
+        public virtual void RecordATransaction()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Record a transaction", ((string[])(null)));
+#line 14
+this.ScenarioSetup(scenarioInfo);
+#line 15
+ testRunner.Given("a Accounts Receivable subledger with id 3001 and a revenue account no. 3000 as co" +
+                    "ntrolling account");
+#line 16
+ testRunner.And("a revenue account 1236 \"Sales (Services)\" in Accounts Receivable");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "AccountNumber",
+                        "AccountName",
+                        "Date",
+                        "TransactionReference",
+                        "Amount"});
+            table2.AddRow(new string[] {
+                        "1236",
+                        "Sales (Services)",
+                        "12/3/2011",
+                        "Consulting,  Harry Slayton",
+                        "2034.12"});
+#line 18
+ testRunner.When("I record the following transaction in the Accounts Receivable ledger:", ((string)(null)), table2);
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "AccountNumber",
+                        "AcctType",
+                        "AccountName",
+                        "Debit",
+                        "Credit"});
+            table3.AddRow(new string[] {
+                        "1236",
+                        "Revenue",
+                        "Sales (Services)",
+                        "0.0",
+                        "2034.12"});
+#line 22
+ testRunner.Then("the trial balance of the Accounts Receivable subledger should look like this:", ((string)(null)), table3);
+#line 26
+ testRunner.And("the Accounts Receivable ledger should not balance.");
 #line hidden
             this.ScenarioCleanup();
         }

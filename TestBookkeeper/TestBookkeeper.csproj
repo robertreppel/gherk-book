@@ -34,6 +34,9 @@
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="ImpromptuInterface">
+      <HintPath>..\packages\SpecFlow.Assist.Dynamic.0.3\lib\40\ImpromptuInterface.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -43,6 +46,9 @@
     <Reference Include="SharpTestsEx.Mvc">
       <HintPath>..\packages\SharpTestsEx.1.1.1\lib\SharpTestsEx.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="SpecFlow.Assist.Dynamic">
+      <HintPath>..\packages\SpecFlow.Assist.Dynamic.0.3\lib\40\SpecFlow.Assist.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,12 +56,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\packages\SpecFlow.1.8.1\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+    <Reference Include="TechTalk.SpecFlow, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecFlow.Assist.Dynamic.0.3\lib\40\TechTalk.SpecFlow.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookkeepingStepDefinitions.cs" />
+    <Compile Include="LedgerStepDefinitions.cs" />
     <Compile Include="RecordBookkeepingTransactions.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -11,7 +11,7 @@ namespace Bookkeeper.Accounting
         public string Name { get; set; }
         public AccountType Type { get; private set; }
 
-        private List<IJournalEntry> _transactions;
+        private readonly List<IJournalEntry> _transactions;
 
         public IEnumerable<IJournalEntry> Transactions {
             get { return _transactions; }
