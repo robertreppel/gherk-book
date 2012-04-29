@@ -16,8 +16,8 @@ Scenario: Record a transaction
 	And a revenue account 1236 "Sales (Services)" in Accounts Receivable
 
 	When I record the following transaction in the Accounts Receivable ledger:
-		| AccountNumber | AccountName      | Date      | TransactionReference		    | Amount    |
-		| 1236          | Sales (Services) | 12/3/2011 | Consulting,  Harry Slayton     | 2034.12   |
+		| AccountNumber | AccountName      | Date      | TransactionReference		   | Amount    |
+		| 1236          | Sales (Services) | 12/3/2011 | 5434 - Widgets, Harry Slayton | 2034.12   |
 		
 	Then the trial balance of the Accounts Receivable ledger should look like this:
          | AccountNumber | AcctType  | AccountName		 | Debit	| Credit	|
@@ -35,11 +35,11 @@ Scenario: Record two transactions
 
 	When I record the following transaction in the Accounts Receivable ledger:
 		| AccountNumber | AccountName      | Date      | TransactionReference		    | Amount    |
-		| 1236          | Sales (Services) | 12/3/2011 | Consulting,  Harry Slayton     | 2034.12   |
+		| 1236          | Sales (Services) | 12/3/2011 | 3212 - Maintenance, Bill Jones | 2034.12   |
 
 	And I record the following transaction in the Assets ledger:
-		| AccountNumber | AccountName      | Date      | TransactionReference		    | Amount    |
-		| 2000          | Bank			   | 12/3/2011 | Consulting,  Harry Slayton     | 2034.12   |
+		| AccountNumber | AccountName      | Date      | TransactionReference		     | Amount    |
+		| 2000          | Bank			   | 12/3/2011 | 3212 - Maintenance, Bill Jones  | 2034.12   |
 		
 
 	Then the trial balance of the Accounts Receivable ledger should look like this:

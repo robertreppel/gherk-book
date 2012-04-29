@@ -118,7 +118,7 @@ this.ScenarioSetup(scenarioInfo);
                         "1236",
                         "Sales (Services)",
                         "12/3/2011",
-                        "Consulting,  Harry Slayton",
+                        "5434 - Widgets, Harry Slayton",
                         "2034.12"});
 #line 18
  testRunner.When("I record the following transaction in the Accounts Receivable ledger:", ((string)(null)), table2);
@@ -170,7 +170,7 @@ this.ScenarioSetup(scenarioInfo);
                         "1236",
                         "Sales (Services)",
                         "12/3/2011",
-                        "Consulting,  Harry Slayton",
+                        "3212 - Maintenance, Bill Jones",
                         "2034.12"});
 #line 36
  testRunner.When("I record the following transaction in the Accounts Receivable ledger:", ((string)(null)), table4);
@@ -185,7 +185,7 @@ this.ScenarioSetup(scenarioInfo);
                         "2000",
                         "Bank",
                         "12/3/2011",
-                        "Consulting,  Harry Slayton",
+                        "3212 - Maintenance, Bill Jones",
                         "2034.12"});
 #line 40
  testRunner.And("I record the following transaction in the Assets ledger:", ((string)(null)), table5);
