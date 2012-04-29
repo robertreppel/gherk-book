@@ -1,8 +1,4 @@
-﻿using System;
-using Bookkeeper.Accounting;
-using Bookkeeper.Infrastructure.Interfaces;
-
-namespace Bookkeeper.Infrastructure
+﻿namespace Bookkeeper.Infrastructure
 {
     public static class Ioc 
     {

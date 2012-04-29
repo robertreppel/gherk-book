@@ -39,7 +39,7 @@ namespace Bookkeeper.Accounting
             return debitsGrandTotal == creditsGrandTotal;
         }
 
-        private IEnumerable<ITrialBalanceLineItem> GenerateLineItemsFrom(IEnumerable<IAccount> accounts)
+        private static IEnumerable<ITrialBalanceLineItem> GenerateLineItemsFrom(IEnumerable<IAccount> accounts)
         {
             var lineItems = new List<ITrialBalanceLineItem>();
             foreach (var thisAccount in accounts)

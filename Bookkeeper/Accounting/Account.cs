@@ -39,7 +39,6 @@ namespace Bookkeeper.Accounting
                          return CreditsIncreaseThe(balance);
                      case (AccountType.Expense):
                          throw new NotImplementedException("Expense acct type balance not implemented.");
-                         return 0;
                      case (AccountType.Equity):
                          return CreditsIncreaseThe(balance);
                  }
@@ -49,7 +48,7 @@ namespace Bookkeeper.Accounting
 
         public void RecordTransaction(decimal amount, DateTime transactionDate, string transactionReference)
         {
-            if (amount == 0) throw new Account.AccountException("Cannot record a transaction with a zero amount.");
+            if (amount == 0) throw new AccountException("Cannot record a transaction with a zero amount.");
             IJournalEntry journalEntry = null;
 
             switch (Type)

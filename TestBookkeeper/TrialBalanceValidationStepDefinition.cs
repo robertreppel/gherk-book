@@ -28,11 +28,11 @@ namespace TestBookkeeper
             Compare(expectedTrialBalanceLineItems, actualTrialBalance.LineItems);
         }
 
-        [Then(@"the trial balance total should be \$(\d+)\.")]
-        public void ThenTheTrialBalanceTotalShouldBe(decimal expectedTrialBalanceTotal)
+        [Then(@"the trial balance total of the (.*) ledger should be \$(\d+)\.")]
+        public void ThenTheTrialBalanceTotalShouldBe(string ledgerName, decimal expectedTrialBalanceTotal)
         {
-            var business = (IDoBookkeeping) ScenarioContext.Current["subledger"];
-            var trialBalance = business.SubLedger.GetTrialBalance();
+            var ledger = (ISubLedger) ScenarioContext.Current[ledgerName];
+            var trialBalance = ledger.GetTrialBalance();
             trialBalance.IsBalanced.Should().Be.True();
             trialBalance.TotalCreditAmount.Should().Be(expectedTrialBalanceTotal);
             trialBalance.TotalDebitAmount.Should().Be(expectedTrialBalanceTotal);
