@@ -9,13 +9,13 @@ namespace TestBookkeeper {
     [Binding]
     public class LedgerStepDefinitions {
 
-        [Given(@"a (.*) subledger with id (\d+) and a (.*) account no. (\d+) as controlling account")]
+        [Given(@"a (.*) ledger with id (\d+) and a (.*) account no. (\d+) as controlling account")]
         public void GivenASubledger(string ledgerName, int ledgerId, AccountType controllingAccountType, int controllingAccountNumber)
         {
 
-            var subledger = Ledger.CreateLedger(ledgerId, ledgerName, controllingAccountNumber,
+            var ledger = Ledger.CreateLedger(ledgerId, ledgerName, controllingAccountNumber,
                                                         controllingAccountType);
-            ScenarioContext.Current.Add(ledgerName, subledger);
+            ScenarioContext.Current.Add(ledgerName, ledger);
         }
 
         [Given(@"[a|an] (asset|liability|revenue|expense|equity) account (\d+) ""(.*)"" in (.*)")]

@@ -14,7 +14,7 @@ namespace TestBookkeeper
     [Binding]
     public class TrialBalanceValidationStepDefinition
     {
-        [Then(@"the trial balance of the (.*) subledger should look like this:")]
+        [Then(@"the trial balance of the (.*) ledger should look like this:")]
         public void ThenTheTrialBalanceShouldLookLikeThis(string ledgerName, Table table)
         {
             var expectedTrialBalanceLineItems = TrialBalanceTransform(table);

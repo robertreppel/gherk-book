@@ -72,8 +72,8 @@ namespace TestBookkeeper
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("a Accounts Receivable subledger with id 3001 and a revenue account no. 3000 as co" +
-                    "ntrolling account");
+ testRunner.Given("a Accounts Receivable ledger with id 3001 and a revenue account no. 3000 as contr" +
+                    "olling account");
 #line 8
  testRunner.And("a revenue account 1236 \"Sales (Services)\" in Accounts Receivable");
 #line hidden
@@ -90,7 +90,7 @@ this.ScenarioSetup(scenarioInfo);
                         "0.0",
                         "0.0"});
 #line 9
- testRunner.Then("the trial balance of the Accounts Receivable subledger should look like this:", ((string)(null)), table1);
+ testRunner.Then("the trial balance of the Accounts Receivable ledger should look like this:", ((string)(null)), table1);
 #line hidden
             this.ScenarioCleanup();
         }
@@ -103,8 +103,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 15
- testRunner.Given("a Accounts Receivable subledger with id 3001 and a revenue account no. 3000 as co" +
-                    "ntrolling account");
+ testRunner.Given("a Accounts Receivable ledger with id 3001 and a revenue account no. 3000 as contr" +
+                    "olling account");
 #line 16
  testRunner.And("a revenue account 1236 \"Sales (Services)\" in Accounts Receivable");
 #line hidden
@@ -136,7 +136,7 @@ this.ScenarioSetup(scenarioInfo);
                         "0.0",
                         "2034.12"});
 #line 22
- testRunner.Then("the trial balance of the Accounts Receivable subledger should look like this:", ((string)(null)), table3);
+ testRunner.Then("the trial balance of the Accounts Receivable ledger should look like this:", ((string)(null)), table3);
 #line 26
  testRunner.And("the Accounts Receivable ledger should not balance.");
 #line hidden
@@ -151,13 +151,12 @@ this.ScenarioSetup(scenarioInfo);
 #line 28
 this.ScenarioSetup(scenarioInfo);
 #line 29
- testRunner.Given("a Accounts Receivable subledger with id 3001 and a revenue account no. 3000 as co" +
-                    "ntrolling account");
+ testRunner.Given("a Accounts Receivable ledger with id 3001 and a revenue account no. 3000 as contr" +
+                    "olling account");
 #line 30
  testRunner.And("a revenue account 1236 \"Sales (Services)\" in Accounts Receivable");
 #line 32
- testRunner.And("a Assets subledger with id 4001 and a asset account no. 4000 as controlling accou" +
-                    "nt");
+ testRunner.And("a Assets ledger with id 4001 and a asset account no. 4000 as controlling account");
 #line 33
  testRunner.And("a asset account 2000 \"Bank\" in Assets");
 #line hidden
@@ -204,7 +203,7 @@ this.ScenarioSetup(scenarioInfo);
                         "0.0",
                         "2034.12"});
 #line 45
- testRunner.Then("the trial balance of the Accounts Receivable subledger should look like this:", ((string)(null)), table6);
+ testRunner.Then("the trial balance of the Accounts Receivable ledger should look like this:", ((string)(null)), table6);
 #line 48
  testRunner.And("the Accounts Receivable ledger should not balance.");
 #line hidden
@@ -221,7 +220,7 @@ this.ScenarioSetup(scenarioInfo);
                         "2034.12",
                         "0.0"});
 #line 50
- testRunner.And("the trial balance of the Assets subledger should look like this:", ((string)(null)), table7);
+ testRunner.And("the trial balance of the Assets ledger should look like this:", ((string)(null)), table7);
 #line 53
  testRunner.And("the Assets ledger should not balance.");
 #line hidden

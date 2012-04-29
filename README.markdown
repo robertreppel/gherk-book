@@ -9,9 +9,9 @@ It might just be possible for developers to sit down with accountants and model 
 financial transactions:
 
 Scenario: Create an account
-	Given a Accounts Receivable subledger with id 3001 and a revenue account no. 3000 as controlling account
+	Given a Accounts Receivable ledger with id 3001 and a revenue account no. 3000 as controlling account
 	And a revenue account 1236 "Sales (Services)" in Accounts Receivable
-	Then the trial balance of the Accounts Receivable subledger should look like this:
+	Then the trial balance of the Accounts Receivable ledger should look like this:
          | AccountNumber | AcctType  | AccountName		 | Debit | Credit |
          |       1236    |   Revenue | Sales (Services)  |   0.0 |   0.0  |
 
