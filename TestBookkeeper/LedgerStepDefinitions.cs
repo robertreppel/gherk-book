@@ -2,6 +2,8 @@
 using System.Linq;
 using Bookkeeper;
 using Bookkeeper.Accounting;
+using Bookkeeper.Infrastructure;
+using Bookkeeper.Infrastructure.Interfaces;
 using SharpTestsEx;
 using TechTalk.SpecFlow;
 
@@ -52,6 +54,12 @@ namespace TestBookkeeper {
                 trialBalance.IsBalanced.Should().Be(true);
             } else {
                 trialBalance.IsBalanced.Should().Be(false); 
+            }
+
+            var reportWriter = Ioc.Resolve<IPrintLedgerReports>();
+            reportWriter.For = ledger;
+            foreach (var account in ledger.Accounts) {
+                reportWriter.Print<IAccount>(account.AccountNumber);
             }
         }
     }

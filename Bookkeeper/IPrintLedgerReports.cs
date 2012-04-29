@@ -2,7 +2,7 @@
 {
     public interface IPrintLedgerReports
     {
-        ILedger For { set; }
+        ILedger For { set; get; }
 
         void Print<T>();
         void Print<T>(int accountNumber);
