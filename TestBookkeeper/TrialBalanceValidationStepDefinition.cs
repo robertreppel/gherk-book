@@ -21,7 +21,6 @@ namespace TestBookkeeper
 
             var ledger = (ISubLedger) ScenarioContext.Current[ledgerName];
 
-            //For debugging - uncomment to see what the actual trial balance looks like:
             var reports = ReportPrinter.For(ledger);
             reports.Print<ITrialBalance>();
 
