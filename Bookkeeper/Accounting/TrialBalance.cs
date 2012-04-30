@@ -55,8 +55,8 @@ namespace Bookkeeper.Accounting
             var totalCredits = 0.0m;
             foreach (var transaction in account.Transactions)
             {
-                totalDebits = totalDebits + transaction.DebitAmount;
-                totalCredits = totalCredits + transaction.CreditAmount;
+                totalDebits = totalDebits + transaction.Debit;
+                totalCredits = totalCredits + transaction.Credit;
             }
             return new TrialBalanceLineItem(account.AccountNumber, account.Name, totalDebits,
                                             totalCredits, account.Type);

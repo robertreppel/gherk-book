@@ -53,7 +53,7 @@ namespace Bookkeeper.Infrastructure
             foreach (var lineItem in sortedLineItems)
             {
                 Console.WriteLine(String.Format(accountStatementFormat, lineItem.TransactionDate.ToShortDateString(), 
-                    lineItem.TransactionReference, lineItem.DebitAmount, lineItem.CreditAmount));
+                    lineItem.TransactionReference, lineItem.Debit, lineItem.Credit));
             }
             Console.WriteLine("Balance: " + account.Balance);
             Console.WriteLine();

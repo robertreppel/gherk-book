@@ -25,10 +25,11 @@ Scenario: Record a transaction
 
 	And the Accounts Receivable ledger should not balance.
 
-	And the account "Sales (Services)" contains the following:
-		| Date      | Transaction                   | Debit   | Credit  |
-		| 12/3/2011 | 5434 - Widgets, Harry Slayton | 0.0     | 2034.12 |
-		| Balance:  |                               | 2034.12 |         |
+	And the "Sales (Services)" 1236 account contains the following:
+
+	|         | TransactionDate | TransactionReference          | Debit   | Credit  |
+	|		  | 12/3/2011       | 5434 - Widgets, Harry Slayton | 0.0     | 2034.12 |
+	| Balance |			        |                               | 2034.12 |         |
 
 
 Scenario: Record two transactions

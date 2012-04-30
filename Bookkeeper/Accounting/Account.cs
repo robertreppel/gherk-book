@@ -22,9 +22,9 @@ namespace Bookkeeper.Accounting
              get
              {
                  var debits = (from e in Transactions
-                               select e.DebitAmount).Sum();
+                               select e.Debit).Sum();
                  var credits = (from e in Transactions
-                               select e.CreditAmount).Sum();
+                               select e.Credit).Sum();
 
                  var balance = debits - credits;
 

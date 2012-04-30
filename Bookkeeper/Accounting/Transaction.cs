@@ -10,14 +10,14 @@ namespace Bookkeeper.Accounting
             TransactionDate = transactionDate;
             AccountNo = accountNo;
             TransactionReference = transactionReference;
-            DebitAmount = debitAmount;
-            CreditAmount = creditAmount;
+            Debit = debitAmount;
+            Credit = creditAmount;
         }
 
         public DateTime TransactionDate { get; private set; }
         public int AccountNo { get; private set; }
         public string TransactionReference { get; private set; }
-        public decimal DebitAmount { get; private set; }
-        public decimal CreditAmount { get; private set; }
+        public decimal Debit { get; private set; }
+        public decimal Credit { get; private set; }
     }
 }
