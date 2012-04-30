@@ -38,6 +38,8 @@ namespace TestBookkeeper
             trialBalance.TotalDebitAmount.Should().Be(expectedTrialBalanceTotal);
         }
 
+        //TODO: awb-1 Step definition for verifying statement of account.
+
         private static void Compare(IEnumerable<ITrialBalanceLineItem> expectedTrialBalanceLineItems, IEnumerable<ITrialBalanceLineItem> actualLineItems)
         {
             Assert.AreEqual(expectedTrialBalanceLineItems.Count(), actualLineItems.Count(),

@@ -38,6 +38,7 @@ namespace Bookkeeper.Accounting
                      case (AccountType.Revenue):
                          return CreditsIncreaseThe(balance);
                      case (AccountType.Expense):
+                         //TODO: awb-2 Implement expense account type.
                          throw new NotImplementedException("Expense acct type balance not implemented.");
                      case (AccountType.Equity):
                          return CreditsIncreaseThe(balance);
