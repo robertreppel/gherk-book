@@ -4,7 +4,7 @@ Accounting Workbench
 __Bookkeeping__ must be one of the most standardized and well-documented domains in existence (http://en.wikipedia.org/wiki/Della_mercatura_e_del_mercante_perfetto).
 
 This is an exercise I'm doing to understand the domain better. 
-With the addition of SpecFlow steps it's beginning to look like a kind of "Accounting Workbench". 
+With the addition of [SpecFlow](http://www.specflow.org/) steps it's beginning to look like a kind of "Accounting Workbench". 
 It might be possible for developers to sit down with accountants and use [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) to
 model the parts of applications which need to record financial transactions:
 
