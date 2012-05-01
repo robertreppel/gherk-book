@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Bookkeeper.Infrastructure.Interfaces;
 using NUnit.Framework;
+using SharpTestsEx;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -16,8 +17,14 @@ namespace TestBookkeeper
             var expectedAccountTransactions = AccountTransform(table);
 
             var business = (IBusiness) ScenarioContext.Current["business"];
-            
 
+            var account = business.Find<IAccount>(accountNumber);
+
+            Matches(expectedAccountTransactions, account.Transactions).Should().Be(true);
+        }
+
+        private bool Matches(IEnumerable<ITransaction> expectedAccountTransactions, IEnumerable<ITransaction> actualTransactions) {
+            throw new NotImplementedException();
         }
 
         [StepArgumentTransformation]
