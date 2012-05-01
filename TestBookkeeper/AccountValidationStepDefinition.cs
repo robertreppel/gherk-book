@@ -11,12 +11,13 @@ namespace TestBookkeeper
     public class AccountValidationStepDefinition
     {
         [Then(@"the ""(.*)"" (\d+) account contains the following:")]
-        public void ThenTheAccountSalesServicesContainsTheFollowing(string accountName, int accountNumber, Table table)
+        public void AccountStatementLooksLike(string accountName, int accountNumber, Table table)
         {
             var expectedAccountTransactions = AccountTransform(table);
 
-            //var account = (IAccount)ScenarioContext.Current[account];
-            Assert.Inconclusive("Not implemented.");
+            var business = (IBusiness) ScenarioContext.Current["business"];
+            
+
         }
 
         [StepArgumentTransformation]

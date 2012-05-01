@@ -11,18 +11,23 @@ namespace TestBookkeeper {
     [Binding]
     public class LedgerStepDefinitions {
 
-        [Given(@"a (.*) ledger with id (\d+) and a (.*) account no. (\d+) as controlling account")]
-        public void GivenASubledger(string ledgerName, int ledgerId, AccountType controllingAccountType, int controllingAccountNumber)
-        {
+        [BeforeScenario]
+        public void CreateBusiness() {
+            var business = Business.Create();
+            ScenarioContext.Current.Add("business", business);
+        }
 
-            var ledger = Ledger.CreateLedger(ledgerId, ledgerName, controllingAccountNumber,
-                                                        controllingAccountType);
-            ScenarioContext.Current.Add(ledgerName, ledger);
+        [Given(@"a (.*) ledger with id (\d+) and a (.*) account no. (\d+) as controlling account")]
+        public void GivenASubledger(string ledgerName, int ledgerId, AccountType controllingAccountType, int controllingAccountNumber) {
+            var business = (IBusiness) ScenarioContext.Current["business"];
+            var ledger = Ledger.CreateLedger(ledgerId, ledgerName);
+            business.Add<ILedger>(ledger);
         }
 
         [Given(@"[a|an] (asset|liability|revenue|expense|equity) account (\d+) ""(.*)"" in (.*)")]
         public void CreateNewAccount(AccountType accountType, int accountNo, string accountName, string ledgerName) {
-            var ledger = (ILedger) ScenarioContext.Current[ledgerName];
+            var business = (IBusiness)ScenarioContext.Current["business"];
+            var ledger = business.Find<ILedger>(ledgerName);
             ledger.AddAccount(accountNo, accountName, accountType);
         }
 
@@ -32,7 +37,8 @@ namespace TestBookkeeper {
         }
 
         private static void RecordIn(string ledgerName, Table transactions) {
-            var ledger = (ILedger)ScenarioContext.Current[ledgerName];
+            var business = (IBusiness)ScenarioContext.Current["business"];
+            var ledger = business.Find<ILedger>(ledgerName);
             foreach(var transaction in transactions.Rows.ToList()) {
                 var accountNumber = Convert.ToInt32(transaction["AccountNumber"]);
                 var date = Convert.ToDateTime(transaction["Date"]);
@@ -48,7 +54,8 @@ namespace TestBookkeeper {
         [Then(@"the (.*) ledger should (not balance|balance)\.")]
         public void TrialBalanceOf(string ledgerName, string shouldBalanceOrNot)
         {
-            var ledger = (ILedger) ScenarioContext.Current[ledgerName];
+            var business = (IBusiness)ScenarioContext.Current["business"];
+            var ledger = business.Find<ILedger>(ledgerName);
             var trialBalance = ledger.GetTrialBalance();
             if(shouldBalanceOrNot == "balance") {
                 trialBalance.IsBalanced.Should().Be(true);
