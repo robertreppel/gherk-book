@@ -19,8 +19,8 @@ namespace TestBookkeeper
         {
             var expectedTrialBalanceLineItems = TrialBalanceTransform(table);
 
-            var ledger = (ILedger) ScenarioContext.Current[ledgerName];
-
+            var business = (IBusiness)ScenarioContext.Current["business"];
+            var ledger = business.Find<ILedger>(ledgerName);
             var reports = ReportPrinter.For(ledger);
             reports.Print<ITrialBalance>();
 
@@ -31,7 +31,8 @@ namespace TestBookkeeper
         [Then(@"the trial balance total of the (.*) ledger should be \$(\d+)\.")]
         public void ThenTheTrialBalanceTotalShouldBe(string ledgerName, decimal expectedTrialBalanceTotal)
         {
-            var ledger = (ILedger) ScenarioContext.Current[ledgerName];
+            var business = (IBusiness)ScenarioContext.Current["business"];
+            var ledger = business.Find<ILedger>(ledgerName);
             var trialBalance = ledger.GetTrialBalance();
             trialBalance.IsBalanced.Should().Be.True();
             trialBalance.TotalCreditAmount.Should().Be(expectedTrialBalanceTotal);
