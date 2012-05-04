@@ -16,13 +16,6 @@ namespace Bookkeeper.Accounting
             Name = ledgerName;
         }
 
-        private readonly Account _controllingAccount;
-
-        public IAccount ControllingAccount {
-            get { return _controllingAccount; }
-
-        }
-
         public string Name { get; private set; }
 
         public ITrialBalance GetTrialBalance() {
