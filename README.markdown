@@ -4,11 +4,12 @@ Accounting Workbench
 __Bookkeeping__ must be one of the most standardized and well-documented domains in existence (http://en.wikipedia.org/wiki/Della_mercatura_e_del_mercante_perfetto).
 
 This is an exercise I'm doing to understand the domain better. 
-With the addition of SpecFlow steps it's beginning to look like a kind of "Accounting Workbench". 
-It might be possible for developers to sit down with accountants and model the parts of applications which need to record
-financial transactions:
+With the addition of [SpecFlow](http://www.specflow.org/) steps it's beginning to look like a kind of "Accounting Workbench". 
+It might be possible for developers to sit down with accountants and use [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) to
+model the parts of applications which need to record financial transactions:
 
 	Scenario: Record a transaction
+	
 	Given a Accounts Receivable ledger with id 3001 and a revenue account no. 3000 as controlling account
 	And a revenue account 1236 "Sales (Services)" in Accounts Receivable
 
@@ -28,9 +29,13 @@ It's rudimentary:
 * There are ledgers.
 * Accounts can be created.
 * Transactions can be recorded.
+* There is a (at this point) somewhat broken trial balance.
 * There is a simple report printer. It writes trial balances and account statements to the console.
+* There are no step definitions for account statements (yet).
+* There are no journals (yet). 
 * There is no user interface. Run the NUnit tests.
 * There is no database.
+
 
 __DISCLAIMER:__ I'm not an accountant. This was put together in a hurry, with domain knowledge googled on the fly. Stay out of jail.
 
