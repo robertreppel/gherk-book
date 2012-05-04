@@ -140,6 +140,27 @@ this.ScenarioSetup(scenarioInfo);
 #line 26
  testRunner.And("the Accounts Receivable ledger should not balance.");
 #line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "",
+                        "TransactionDate",
+                        "TransactionReference",
+                        "Debit",
+                        "Credit"});
+            table4.AddRow(new string[] {
+                        "",
+                        "12/3/2011",
+                        "5434 - Widgets, Harry Slayton",
+                        "0.0",
+                        "2034.12"});
+            table4.AddRow(new string[] {
+                        "Balance",
+                        "",
+                        "",
+                        "2034.12",
+                        ""});
+#line 28
+ testRunner.And("the \"Sales (Services)\" 1236 account contains the following:", ((string)(null)), table4);
+#line hidden
             this.ScenarioCleanup();
         }
         
@@ -148,32 +169,17 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void RecordTwoTransactions()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Record two transactions", ((string[])(null)));
-#line 28
+#line 35
 this.ScenarioSetup(scenarioInfo);
-#line 29
+#line 36
  testRunner.Given("a Accounts Receivable ledger with id 3001 and a revenue account no. 3000 as contr" +
                     "olling account");
-#line 30
+#line 37
  testRunner.And("a revenue account 1236 \"Sales (Services)\" in Accounts Receivable");
-#line 32
+#line 39
  testRunner.And("a Assets ledger with id 4001 and a asset account no. 4000 as controlling account");
-#line 33
+#line 40
  testRunner.And("a asset account 2000 \"Bank\" in Assets");
-#line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
-                        "AccountNumber",
-                        "AccountName",
-                        "Date",
-                        "TransactionReference",
-                        "Amount"});
-            table4.AddRow(new string[] {
-                        "1236",
-                        "Sales (Services)",
-                        "12/3/2011",
-                        "3212 - Maintenance, Bill Jones",
-                        "2034.12"});
-#line 36
- testRunner.When("I record the following transaction in the Accounts Receivable ledger:", ((string)(null)), table4);
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "AccountNumber",
@@ -182,30 +188,28 @@ this.ScenarioSetup(scenarioInfo);
                         "TransactionReference",
                         "Amount"});
             table5.AddRow(new string[] {
+                        "1236",
+                        "Sales (Services)",
+                        "12/3/2011",
+                        "3212 - Maintenance, Bill Jones",
+                        "2034.12"});
+#line 43
+ testRunner.When("I record the following transaction in the Accounts Receivable ledger:", ((string)(null)), table5);
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "AccountNumber",
+                        "AccountName",
+                        "Date",
+                        "TransactionReference",
+                        "Amount"});
+            table6.AddRow(new string[] {
                         "2000",
                         "Bank",
                         "12/3/2011",
                         "3212 - Maintenance, Bill Jones",
                         "2034.12"});
-#line 40
- testRunner.And("I record the following transaction in the Assets ledger:", ((string)(null)), table5);
-#line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
-                        "AccountNumber",
-                        "AcctType",
-                        "AccountName",
-                        "Debit",
-                        "Credit"});
-            table6.AddRow(new string[] {
-                        "1236",
-                        "Revenue",
-                        "Sales (Services)",
-                        "0.0",
-                        "2034.12"});
-#line 45
- testRunner.Then("the trial balance of the Accounts Receivable ledger should look like this:", ((string)(null)), table6);
-#line 48
- testRunner.And("the Accounts Receivable ledger should not balance.");
+#line 47
+ testRunner.And("I record the following transaction in the Assets ledger:", ((string)(null)), table6);
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "AccountNumber",
@@ -214,14 +218,31 @@ this.ScenarioSetup(scenarioInfo);
                         "Debit",
                         "Credit"});
             table7.AddRow(new string[] {
+                        "1236",
+                        "Revenue",
+                        "Sales (Services)",
+                        "0.0",
+                        "2034.12"});
+#line 52
+ testRunner.Then("the trial balance of the Accounts Receivable ledger should look like this:", ((string)(null)), table7);
+#line 55
+ testRunner.And("the Accounts Receivable ledger should not balance.");
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "AccountNumber",
+                        "AcctType",
+                        "AccountName",
+                        "Debit",
+                        "Credit"});
+            table8.AddRow(new string[] {
                         "2000",
                         "Asset",
                         "Bank",
                         "2034.12",
                         "0.0"});
-#line 50
- testRunner.And("the trial balance of the Assets ledger should look like this:", ((string)(null)), table7);
-#line 53
+#line 57
+ testRunner.And("the trial balance of the Assets ledger should look like this:", ((string)(null)), table8);
+#line 60
  testRunner.And("the Assets ledger should not balance.");
 #line hidden
             this.ScenarioCleanup();

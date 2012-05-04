@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountValidationStepDefinition.cs" />
     <Compile Include="LedgerStepDefinitions.cs" />
     <Compile Include="RecordBookkeepingTransactions.feature.cs">
       <AutoGen>True</AutoGen>
@@ -69,6 +70,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBookkeeping.cs" />
+    <Compile Include="TestBusiness.cs" />
     <Compile Include="TrialBalanceValidationStepDefinition.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ namespace Bookkeeper.Infrastructure.Interfaces
         DateTime TransactionDate { get; }
         int AccountNo { get; }
         string TransactionReference { get; }
-        decimal DebitAmount { get; }
-        decimal CreditAmount { get; }
+        decimal Debit { get; }
+        decimal Credit { get; }
     }
 }

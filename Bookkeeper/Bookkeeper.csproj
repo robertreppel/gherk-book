@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Accounting\Account.cs" />
     <Compile Include="Accounting\AccountType.cs" />
+    <Compile Include="Accounting\Business.cs" />
     <Compile Include="Accounting\Ledger.cs" />
     <Compile Include="Accounting\Transaction.cs" />
     <Compile Include="Accounting\TrialBalance.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="ILedger.cs" />
     <Compile Include="Infrastructure\ConsoleLedgerReportPrinter.cs" />
     <Compile Include="Infrastructure\Interfaces\IAccount.cs" />
+    <Compile Include="Infrastructure\Interfaces\IBusiness.cs" />
     <Compile Include="Infrastructure\Interfaces\ITransaction.cs" />
     <Compile Include="Infrastructure\Interfaces\ITrialBalance.cs" />
     <Compile Include="Infrastructure\Interfaces\ITrialBalanceLineItem.cs" />
