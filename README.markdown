@@ -1,31 +1,41 @@
-Double Entry Bookkeeping Kata
-=============================
+Accounting Workbench
+====================
 
 __Bookkeeping__ must be one of the most standardized and well-documented domains in existence (http://en.wikipedia.org/wiki/Della_mercatura_e_del_mercante_perfetto).
 
-The implementation maintains the accounting equation: 
+This is an exercise I'm doing to understand the domain better. 
+With the addition of [SpecFlow](http://www.specflow.org/) steps it's beginning to look like a kind of "Accounting Workbench". 
+It might be possible for developers to sit down with accountants and use [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) to
+model the parts of applications which need to record financial transactions:
 
-__Assets = Liabilities + (Shareholders or Owners equity).__
+	Scenario: Record a transaction
+	
+	Given a Accounts Receivable ledger with id 3001 and a revenue account no. 3000 as controlling account
+	And a revenue account 1236 "Sales (Services)" in Accounts Receivable
 
-* There is general ledger with a chart of accounts and a general journal.
-* It's possible to post transactions.
-* Trial balances can be generated.
-* Account statements can be produced.
-* There are no sales-, purchase- or other special journals. 
+	When I record the following transaction in the Accounts Receivable ledger:
+		| AccountNumber | AccountName      | Date      | TransactionReference		   | Amount    |
+		| 1236          | Sales (Services) | 12/3/2011 | 5434 - Widgets, Harry Slayton | 2034.12   |
+		
+	Then the trial balance of the Accounts Receivable ledger should look like this:
+         | AccountNumber | AcctType  | AccountName		 | Debit	| Credit	|
+         |       1236    |   Revenue | Sales (Services)  |  0.0		|   2034.12	|
 
-__The accounting bounded context of a fictional business__ is modeled in a service exposed by the IDoAccounting interface:
+	And the Accounts Receivable ledger should not balance.
 
-* Cash sales only.
-* We charge sales tax. Amount owing to the government is amount collected - amount paid by the business.
-* The owner can inject cash into the business.
-* Investors can invest cash into the business.
-* There is no inventory. Product for sale is represented by a transaction reference string. It's vague, ill-defined and therefore probably consulting services.
 
-There is a report printer for trial balances and account statements. It's very dumb and writes to the console.
+It's rudimentary:
 
-There is no user interface. Run the NUnit tests - they will Console.WriteLine trial balances and statements. (Try the "ShouldPayAccountsPayable" test.)
+* There are ledgers.
+* Accounts can be created.
+* Transactions can be recorded.
+* There is a (at this point) somewhat broken trial balance.
+* There is a simple report printer. It writes trial balances and account statements to the console.
+* There are no step definitions for account statements (yet).
+* There are no journals (yet). 
+* There is no user interface. Run the NUnit tests.
+* There is no database.
 
-There is no database.
 
 __DISCLAIMER:__ I'm not an accountant. This was put together in a hurry, with domain knowledge googled on the fly. Stay out of jail.
 

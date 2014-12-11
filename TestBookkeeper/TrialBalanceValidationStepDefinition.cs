@@ -14,30 +14,32 @@ namespace TestBookkeeper
     [Binding]
     public class TrialBalanceValidationStepDefinition
     {
-        [Then(@"the trial balance should look like this:")]
-        public void ThenTheTrialBalanceShouldLookLikeThis(Table table)
+        [Then(@"the trial balance of the (.*) ledger should look like this:")]
+        public void ThenTheTrialBalanceShouldLookLikeThis(string ledgerName, Table table)
         {
             var expectedTrialBalanceLineItems = TrialBalanceTransform(table);
 
-            var business = (IDoAccounting)ScenarioContext.Current["business"];
+            var business = (IBusiness)ScenarioContext.Current["business"];
+            var ledger = business.Find<ILedger>(ledgerName);
+            var reports = ReportPrinter.For(ledger);
+            reports.Print<ITrialBalance>();
 
-            //For debugging - uncomment to see what the actual trial balance looks like:
-            //var reports = ReportPrinter.For(business);
-            //reports.Print<ITrialBalance>();
-
-            var actualTrialBalance = business.GetTrialBalance();
+            var actualTrialBalance = ledger.GetTrialBalance();
             Compare(expectedTrialBalanceLineItems, actualTrialBalance.LineItems);
         }
 
-        [Then(@"the trial balance total should be \$(\d+)\.")]
-        public void ThenTheTrialBalanceTotalShouldBe(decimal expectedTrialBalanceTotal)
+        [Then(@"the trial balance total of the (.*) ledger should be \$(\d+)\.")]
+        public void ThenTheTrialBalanceTotalShouldBe(string ledgerName, decimal expectedTrialBalanceTotal)
         {
-            var business = (IDoAccounting)ScenarioContext.Current["business"];
-            var trialBalance = business.GetTrialBalance();
+            var business = (IBusiness)ScenarioContext.Current["business"];
+            var ledger = business.Find<ILedger>(ledgerName);
+            var trialBalance = ledger.GetTrialBalance();
             trialBalance.IsBalanced.Should().Be.True();
             trialBalance.TotalCreditAmount.Should().Be(expectedTrialBalanceTotal);
             trialBalance.TotalDebitAmount.Should().Be(expectedTrialBalanceTotal);
         }
+
+        //TODO: awb-1 Step definition for verifying statement of account.
 
         private static void Compare(IEnumerable<ITrialBalanceLineItem> expectedTrialBalanceLineItems, IEnumerable<ITrialBalanceLineItem> actualLineItems)
         {

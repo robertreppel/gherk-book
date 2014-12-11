@@ -9,7 +9,7 @@ namespace Bookkeeper.Infrastructure.Interfaces
         int AccountNumber { get; }
         string Name { get; set; }
         AccountType Type { get; }
-        IEnumerable<IJournalEntry> Transactions { get; }
+        IEnumerable<ITransaction> Transactions { get; }
         decimal Balance { get; }
         void RecordTransaction(decimal amount, DateTime transactionDate, string transactionReference);
     }
